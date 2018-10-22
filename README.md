@@ -18,7 +18,7 @@ Mod 1 - Idea Box
 ## Contributors
 * Karin Ohman
 * Gabe Inzurriaga
-* Dylan Hoffman
+* Dylan Hofmann
 
 ## Final Site Comp
 
