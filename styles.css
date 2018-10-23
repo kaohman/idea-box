@@ -105,9 +105,9 @@ form button:disabled {
   background-color: #C2C1C0;
 }
 
-form button:hover {
+/*form button:hover {
   background-color: #524649;
-}
+}*/
 
 /* the idea box section */
 .idea-box-section {
