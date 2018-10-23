@@ -5,12 +5,14 @@ var ideaInputs = document.querySelectorAll(".js-idea-inputs");
 var deleteButton;
 
 saveButton.addEventListener('click', createNewIdea);
-// deleteButton.addEventListener('click', deleteIdea(event));
+deleteButton.addEventListener('click', deleteIdea(event));
 
-ideaInputs[0].addEventListener('input', enableButton(saveButton));
+ideaInputs[0].addEventListener('input', enableSaveButton);
+// Add error message if no body?
 
 function createNewIdea() {
   var idea = new Idea(ideaInputs[0].value, ideaInputs[1].value);
+  // console.log(ideaInputs[0].value);
   idea.saveToStorage();
   createCard(idea);
   clearInputs();
@@ -21,7 +23,7 @@ function clearInputs() {
     ideaInputs[i].value = '';
   };
 // Use input type button and add disabled in HTML
-  saveButton.disabled = true;
+  disableSaveButton();
 }
 
 function createCard(idea) {
@@ -32,7 +34,7 @@ function createCard(idea) {
       <img class="arrows" src="icons/downvote.svg">
       <img class="arrows" src="icons/upvote.svg">
       <p class="quality">Quality: <span>${idea.quality}</span></p>
-      <img class="delete" src="icons/delete.svg">
+      <img class="delete js-delete-button" src="icons/delete.svg">
     </div>
   </div>`;
   var newCard = document.querySelector('.js-card-section');
@@ -41,16 +43,21 @@ function createCard(idea) {
 
 function deleteIdea(event) {
   if (event.target.classList.contains('js-delete-button')) {
+    debugger
     deleteCard(event);
     // find exact idea to delete and delete it in storage.
   }
 }
 
 function deleteCard(event) {
-  var deleteDiv = document.querySelector('.js-idea-card');
+  // var deleteDiv = document.querySelector('.js-idea-card');
   event.target.closest('.js-idea-card').remove();
 }
 
-function enableButton(button) {
-  button.disabled = false;
+function enableSaveButton() {
+  saveButton.disabled = false;
+}
+
+function disableSaveButton() {
+  saveButton.disabled = true;
 }
