@@ -7,15 +7,19 @@
     content="a site to save the best and worst ideas">
   <meta name="keywords"
     content="idea, idaebox, turing project">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1>IDEABOX</h1>
-    <input type="text" placeholder="Search">
-    <img src="">
-    <button>
-      <img src="#">
-    </button>
+    <h1><span id="first-h1">ideabox</span><span id="second-h1">triples</span></h1>
+      <div class="search">
+        <input id="search-input" type="text" placeholder="Search">
+        <button id="search-svg" >
+          <img src="icons/search.svg">
+        </button>
+      <div>
   </header>
   <section id="input-section">
     <form>
@@ -29,14 +33,14 @@
     </form>
   </section>
   <section id="idea-box-section">
-    <div>
+    <div id="idea-box">
       <h2>idea box</h2>
-      <p>hello world hello world</p>
-      <div>
-        <img src="icons/downvote.svg">
-        <img src="icons/upvote.svg">
-        <p>Quality: <span>Swill</span></p>
-        <img src="icons/delete.svg">
+      <p>hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world</p>
+      <div id="idea-box-bottom">
+        <img class="arrows" src="icons/downvote.svg">
+        <img class="arrows" src="icons/upvote.svg">
+        <p id="quality">Quality: <span>Swill</span></p>
+        <img id="delete" src="icons/delete.svg">
       </div>
     </div>
   </section>
