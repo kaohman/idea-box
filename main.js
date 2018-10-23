@@ -1,15 +1,16 @@
 
 // add/check classes in HTML
 var saveButton = document.querySelector('.js-save-button');
-var deleteDiv = document.querySelector('.js-delete-div');
-
 var ideaInputs = document.querySelectorAll(".js-idea-inputs");
+var deleteButton;
 
 saveButton.addEventListener('click', createNewIdea);
-deleteButton.addEventListener('click', deleteIdea(event));
+// deleteButton.addEventListener('click', deleteIdea(event));
+
+ideaInputs[0].addEventListener('input', enableButton(saveButton));
 
 function createNewIdea() {
-  var idea = new Idea(document.querySelector('.js-title'), document.querySelector('.js-body'));
+  var idea = new Idea(ideaInputs[0].value, ideaInputs[1].value);
   idea.saveToStorage();
   createCard(idea);
   clearInputs();
@@ -24,19 +25,18 @@ function clearInputs() {
 }
 
 function createCard(idea) {
-  var cardHTML = `
-  <div>
+  var cardHTML = `<div class="idea-box js-idea-card">
     <h2>${idea.title}</h2>
     <p>${idea.body}</p>
-    <div>
-      <img src="icons/downvote.svg">
-      <img src="icons/upvote.svg">
-      <p>Quality: <span>${idea.quality}</span></p>
-      <img src="icons/delete.svg">
+    <div class="idea-box-bottom">
+      <img class="arrows" src="icons/downvote.svg">
+      <img class="arrows" src="icons/upvote.svg">
+      <p class="quality">Quality: <span>${idea.quality}</span></p>
+      <img class="delete" src="icons/delete.svg">
     </div>
   </div>`;
   var newCard = document.querySelector('.js-card-section');
-  newCard.insertAdjacentHTML = ('afterbegin', cardHTML);
+  newCard.insertAdjacentHTML('afterbegin', cardHTML);
 }
 
 function deleteIdea(event) {
@@ -47,5 +47,10 @@ function deleteIdea(event) {
 }
 
 function deleteCard(event) {
+  var deleteDiv = document.querySelector('.js-idea-card');
   event.target.closest('.js-idea-card').remove();
+}
+
+function enableButton(button) {
+  button.disabled = false;
 }
