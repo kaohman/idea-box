@@ -46,8 +46,8 @@ function createCardsOnReload(){
 
 function createCard(idea) {
   var cardHTML = `<div class="idea-box js-idea-card" data-id=${idea.id}>
-    <h2>${idea.title}</h2>
-    <p>${idea.body}</p>
+    <h2 class="js-title-text" contenteditable="false">${idea.title}</h2>
+    <p class="js-body-text" contenteditable="false">${idea.body}</p>
     <div class="idea-box-bottom">
       <img class="arrows" src="icons/downvote.svg">
       <img class="arrows" src="icons/upvote.svg">
