@@ -1,6 +1,6 @@
 class Idea {
-  constructor(title, body, quality) {
-    this.id = "id" + Date.now();
+  constructor(title, body, quality, id) {
+    this.id = id || "id" + Date.now();
     this.title = title;
     this.body = body;
     this.quality = quality || 'Swill';
@@ -15,8 +15,9 @@ class Idea {
     localStorage.removeItem(this.id);
   }
 
-  updateSelf() {
-
+  updateSelf(newTitle, newBody) {
+    this.title = newTitle;
+    this.body = newBody;
   }
 
   updateQuality(vote) {

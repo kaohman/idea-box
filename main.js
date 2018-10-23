@@ -30,7 +30,6 @@ function clearInputs() {
   for (var i = 0; i < ideaInputs.length; i++) {
     ideaInputs[i].value = '';
   };
-// Use input type button and add disabled in HTML
   disableSaveButton();
 }
 
@@ -39,6 +38,10 @@ function createCardsOnReload(){
     if(localStorage.hasOwnProperty(key)) {
       var card = localStorage.getItem(key);
       var parsedCard = JSON.parse(card);
+
+      var idea = new Idea(parsedCard.title, parsedCard.body, parsedCard.quality, parsedCard.id);
+      ideaArray.push(idea);
+
       createCard(parsedCard);
     }
   }
@@ -67,7 +70,6 @@ function findIndexNumber(objId) {
 }
 
 function deleteCard(event) {
-  
   var cardId = event.target.parentElement.parentElement.dataset.id;
   
   var index = findIndexNumber(cardId);
@@ -75,8 +77,6 @@ function deleteCard(event) {
   ideaArray.splice(index, 1);
 
   event.target.closest('.js-idea-card').remove();
-  // localStorage.removeItem(cardId);
-
 }
 
 function disableSaveButton() {
