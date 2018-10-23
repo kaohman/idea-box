@@ -1,0 +1,253 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  display: grid;
+  grid-template-rows: 100px 330px 1fr;
+  grid-template-areas: 
+  "header"
+  "input"
+  "ideabox";
+}
+
+img {
+  width: 35px;
+  vertical-align: middle;
+}
+
+/* header */
+header {
+  grid-area: header;
+  background-color: #524649;
+  padding: 10px;
+}
+
+h1 {
+  color: #B2A1B1;
+  font-weight: 800;
+  font-size: 3em;
+  display: inline-block;
+  margin: 0;
+}
+
+#first-h1 {
+  color: #B2A1B1;
+}
+
+#second-h1 {
+  color: #FFFFFF;
+}
+
+.search {
+  width: 400px;
+  height: 40px;
+  display: flex;
+  float: right;
+  margin: 20px;
+}
+
+#search-input {
+  display: inline-block;
+  font-size: 2em;
+  border: 2px solid #D2CCCD;
+  border-radius: 5px 0px 0px 5px;
+}
+
+#search-svg {
+  display: inline-block;
+  border-radius: 0px 5px 5px 0px;
+  background-color: #D2CCCD;
+}
+
+
+/* the input section */
+#input-section {
+  grid-area: input;
+  background-color: #EAEAEA;
+}
+
+form {
+  margin: 10px auto;
+  width: 810px;
+}
+
+label {
+  font-size: 2em;
+  font-weight: 100;
+  color: #7C7879;
+}
+
+form input {
+  width: 800px;
+  height: 40px;
+  display: block;
+  border: 2px solid #D2CCCD;
+  border-radius: 5px;
+}
+
+form button {
+  color: #FFFFFF;
+  font-size: 2em;
+  background-color: #6E646B;
+  width: 805px;
+  margin: 30px auto;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+form button:disabled {
+  background-color: #C2C1C0;
+}
+
+form button:hover {
+  background-color: #524649;
+}
+
+/* the idea box section */
+#idea-box-section {
+  grid-area: ideabox;
+  background-color: #F9F9FA;
+}
+
+#idea-box {
+  border: 2px solid #D2CCCD;
+  border-radius: 5px;
+  width: 800px;
+  margin: 20px auto;
+  box-sizing: border-box;
+}
+
+h2 {
+  margin: 20px;
+  color: #6E646B;
+  font-size: 2em;
+}
+
+p {
+  margin: 20px;
+  color: #7C7879;
+  font-size: 1.5em;
+}
+#quality {
+  font-weight: bold;
+  margin: 20px;
+  display: inline;
+}
+
+.arrows {
+  margin: 5px 10px 5px auto;
+}
+
+#delete {
+  float: right;
+  margin: 5px 10px 5px auto;
+}
+
+
+
+#idea-box-bottom {
+  border-top: 2px solid #D2CCCD;
+  height: 40px;
+  padding: 5px 10px;
+}
+
+/* media query */
+
+@media screen and (max-width: 820px) {
+
+/* header */
+
+.search {
+  width: 48vw;
+}
+
+#search-input {
+  width: 39vw;
+}
+
+#search-svg {
+  width: 6vw;
+}
+
+/* the input section */
+
+form {
+  width: 98.78vw;
+}
+
+form input {
+  width: 97.56vw;
+}
+
+form button {
+  width: 98.17vw;
+}
+
+/* the idea box section */
+
+#idea-box {
+  width: 97.56vw;
+}
+
+}
+
+@media screen and (max-width: 730px) {
+  body {
+  grid-template-rows: 150px 330px 1fr;
+  grid-template-areas: 
+  "header"
+  "input"
+  "ideabox";
+}
+
+/* header */
+header {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+h1 {
+  display: block;
+  text-align: center;
+}
+
+.search {
+  width: 320px;
+  height: 40px;
+  margin: 0 40px;
+}
+
+#search-input {
+  width: 265px;
+}
+
+#search-svg {
+  width: 45px;
+}
+
+/* the input section */
+
+form {
+  width: 98.78vw;
+}
+
+form input {
+  width: 97.56vw;
+}
+
+form button {
+  width: 98.17vw;
+}
+
+/* the idea box section */
+
+#idea-box {
+  width: 97.56vw;
+}
+
+#quality {
+  margin: 0;
+}
+
+}
