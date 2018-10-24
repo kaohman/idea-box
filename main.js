@@ -132,7 +132,7 @@ function enterSaveText(event) {
   }                        
 }; 
 
-function clickSaveText(cardId) {
+function clickSaveText() {
   if (!event.target.classList.contains("js-text")) {
     // saveText(event);
 
