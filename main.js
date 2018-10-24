@@ -100,10 +100,20 @@ cardSection.addEventListener("dblclick", function (event) {
 
 function saveText(event) {
   event.target.contentEditable = false;
+  console.log(event.target);
+  debugger;
+  updateIdea(event);
+}
+
+function saveTextClick() {
+  var editableFields = document.querySelectorAll(".js-text");
+  for (i=0; i < editableFields.length; i++) {
+    editableFields[i].contentEditable = false;
+  }
 }
 
 document.body.addEventListener("keypress", enterSaveText);
-document.body.addEventListener("dblclick", clickSaveText);
+document.body.addEventListener("click", clickSaveText);
 
 function enterSaveText(event) {
   if (event.code === 'Enter') {    
@@ -114,14 +124,16 @@ function enterSaveText(event) {
 
 function clickSaveText(event) {
   if (!event.target.classList.contains("js-text")) {
-    saveText(event);
+    // saveText(event);
+    saveTextClick();
   }
 }
 
-// function updateIdea() {
-//   var newTitle = document.querySelector(".js-title-text");
-//   var newBody = document.querySelector(".js-body-text");
-//     localStorage. = newTitle.innerHTML;
-//     localStorage. = newBody.innerHTML;
-//  }
+function updateIdea(event) {
+  var cardId = event.target.parentElement.parentElement.dataset.id;
+  // var newTitle = document.querySelector(".js-title-text");
+  // var newBody = document.querySelector(".js-body-text");
+    // localStorage. = newTitle.innerHTML;
+    // localStorage. = newBody.innerHTML;
+ }
 
