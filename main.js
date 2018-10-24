@@ -49,8 +49,8 @@ function createCardsOnReload(){
 
 function createCard(idea) {
   var cardHTML = `<div class="idea-box js-idea-card" data-id=${idea.id}>
-    <h2 class="js-title-text" contenteditable="false">${idea.title}</h2>
-    <p class="js-body-text" contenteditable="false">${idea.body}</p>
+    <h2 class="js-text js-title-text" contenteditable="false">${idea.title}</h2>
+    <p class="js-text js-body-text" contenteditable="false">${idea.body}</p>
     <div class="idea-box-bottom">
       <img class="arrows" src="icons/downvote.svg">
       <img class="arrows" src="icons/upvote.svg">
@@ -86,4 +86,42 @@ function disableSaveButton() {
 function enableSaveButton() {
   saveButton.disabled = false;
 }
+
+/* card edit function */
+function editText(event) {
+    event.target.contentEditable = true;
+}
+
+cardSection.addEventListener("dblclick", function (event) {
+  if (event.target.classList.contains("js-text")) {
+    editText(event);
+  }
+});
+
+function saveText(event) {
+  event.target.contentEditable = false;
+}
+
+document.body.addEventListener("keypress", enterSaveText);
+document.body.addEventListener("dblclick", clickSaveText);
+
+function enterSaveText(event) {
+  if (event.code === 'Enter') {    
+    saveText(event); 
+    return false;
+  }                        
+}; 
+
+function clickSaveText(event) {
+  if (!event.target.classList.contains("js-text")) {
+    saveText(event);
+  }
+}
+
+// function updateIdea() {
+//   var newTitle = document.querySelector(".js-title-text");
+//   var newBody = document.querySelector(".js-body-text");
+//     localStorage. = newTitle.innerHTML;
+//     localStorage. = newBody.innerHTML;
+//  }
 
