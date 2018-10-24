@@ -105,7 +105,7 @@ cardSection.addEventListener("dblclick", function (event) {
     editText(event);
     document.body.addEventListener("keypress", enterSaveText);
     // Click - how to target element to save to local storage?
-    document.body.addEventListener("click", clickSaveText(cardId));
+    document.body.addEventListener("click", clickSaveText);
   }
 });
 
