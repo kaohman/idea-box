@@ -15,9 +15,12 @@ class Idea {
     localStorage.removeItem(this.id);
   }
 
-  updateSelf(newTitle, newBody) {
-    this.title = newTitle;
-    this.body = newBody;
+  updateSelf(newText, type) {
+    if (type === 'title') {
+      this.title = newText;
+    } else if (type === 'body') {
+      this.body = newText;
+    }
   }
 
   updateQuality(vote) {

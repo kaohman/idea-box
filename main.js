@@ -20,7 +20,7 @@ ideaInputs[0].addEventListener('input', enableSaveButton);
 function createNewIdea() {
   var idea = new Idea(ideaInputs[0].value, ideaInputs[1].value);
   ideaArray.push(idea);
-  console.log(ideaArray);
+  // console.log(ideaArray);
   idea.saveToStorage();
   createCard(idea);
   clearInputs();
@@ -87,6 +87,11 @@ function enableSaveButton() {
   saveButton.disabled = false;
 }
 
+// Upvote/Downvote Functionality
+
+
+
+
 /* card edit function */
 function editText(event) {
     event.target.contentEditable = true;
@@ -94,46 +99,60 @@ function editText(event) {
 
 cardSection.addEventListener("dblclick", function (event) {
   if (event.target.classList.contains("js-text")) {
+    // Use this a lot - refactor into function
+    var cardId = event.target.parentElement.dataset.id;
+
     editText(event);
+    document.body.addEventListener("keypress", enterSaveText);
+    // Click - how to target element to save to local storage?
+    document.body.addEventListener("click", clickSaveText(cardId));
   }
 });
 
+// Check if we can just use clickSaveText function
 function saveText(event) {
   event.target.contentEditable = false;
-  console.log(event.target);
-  debugger;
-  updateIdea(event);
 }
 
-function saveTextClick() {
+function saveOnClick() {
   var editableFields = document.querySelectorAll(".js-text");
   for (i=0; i < editableFields.length; i++) {
     editableFields[i].contentEditable = false;
   }
 }
 
-document.body.addEventListener("keypress", enterSaveText);
-document.body.addEventListener("click", clickSaveText);
-
 function enterSaveText(event) {
-  if (event.code === 'Enter') {    
+  if (event.code === 'Enter') {
+
+    updateIdea(event);    
     saveText(event); 
-    return false;
+    document.body.removeEventListener("keypress", enterSaveText);
+    document.body.removeEventListener("click", clickSaveText);
+    // return false;
   }                        
 }; 
 
-function clickSaveText(event) {
+function clickSaveText(cardId) {
   if (!event.target.classList.contains("js-text")) {
     // saveText(event);
-    saveTextClick();
+
+    // updateIdea(cardId);
+    saveOnClick();
   }
 }
 
 function updateIdea(event) {
-  var cardId = event.target.parentElement.parentElement.dataset.id;
-  // var newTitle = document.querySelector(".js-title-text");
-  // var newBody = document.querySelector(".js-body-text");
-    // localStorage. = newTitle.innerHTML;
-    // localStorage. = newBody.innerHTML;
- }
+  var cardId = event.target.parentElement.dataset.id;
+  var index = findIndexNumber(cardId);
+
+  if (event.target.classList.contains("js-title-text")) {
+    var newTitle = event.target.innerText;
+    ideaArray[index].updateSelf(newTitle, 'title');
+  } else if (event.target.classList.contains("js-body-text")) {
+    var newBody = event.target.innerText; 
+    ideaArray[index].updateSelf(newBody, 'body');
+  };
+
+  ideaArray[index].saveToStorage();
+}
 
