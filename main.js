@@ -157,6 +157,27 @@ function updateIdea(event) {
 }
 
 
+/* live search function */
+var search = document.querySelector(".search-input");
+
+search.addEventListener("keyup", function() {
+var searchinput = this.value;
+var h2Element = document.querySelectorAll("h2");
+var pElement = document.querySelectorAll("p");
+console.log(searchinput + " input");
+    console.log(h2Element.length + " length");
+  for (i=0; i < h2Element.length; i++) {
+  if (h2Element[i].innerHTML.indexOf(searchinput) != -1) { 
+        console.log(h2Element[i].innerText + " showing")
+    h2Element[i].parentElement.style.display = "block";
+  }else if (h2Element[i].innerHTML.indexOf("searchinput") <= -1) {
+        console.log(h2Element[i].innerText + " not showing")
+    h2Element[i].parentElement.style.display = "none";
+  }
+}
+});
+
+
 cardSection.addEventListener('click', function(){
   var votebutton;
   if (event.target.classList.contains('js-up-vote')) {
