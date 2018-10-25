@@ -156,35 +156,29 @@ function updateIdea(event) {
   ideaArray[index].saveToStorage();
 }
 
+
 cardSection.addEventListener('click', function(){
+  var votebutton;
   if (event.target.classList.contains('js-up-vote')) {
-    upvote(event);
+    votebutton = 'up';
+    vote(event, votebutton);
   } else if (event.target.classList.contains('js-down-vote')) {
-    downvote(event);
+    votebutton = 'down'
+    vote(event, votebutton);
   }
 })
 
-function upvote(event) {
+function vote(event, votebutton) {
   var cardId = event.target.parentElement.parentElement.dataset.id;
   var index = findIndexNumber(cardId);
-  ideaArray[index].updateQuality('up');
-  ideaArray[index].saveToStorage();
-  // debugger;
-
+  if (votebutton === 'up') {
+    ideaArray[index].updateQuality('up');
     event.target.nextElementSibling.firstElementChild.innerText = ideaArray[index].quality;
-  // event.target.parentElementclassList.contains('js-quality').innerText = ideaArray[index].quality;
-  // console.log(event.target.closest('.js-quality')); 
-}
-function downvote(event) {
-  var cardId = event.target.parentElement.parentElement.dataset.id;
-  var index = findIndexNumber(cardId);
-  ideaArray[index].updateQuality('down');
-  ideaArray[index].saveToStorage();
-  // debugger;
-
+  } else if (votebutton === 'down') {
+    ideaArray[index].updateQuality('down');
     event.target.nextElementSibling.nextElementSibling.firstElementChild.innerText = ideaArray[index].quality;
-  // event.target.parentElementclassList.contains('js-quality').innerText = ideaArray[index].quality;
-  // console.log(event.target.closest('.js-quality')); 
+  };
+  ideaArray[index].saveToStorage();
+  ideaArray.splice(index, 1, ideaArray[index]);
 }
-
 
