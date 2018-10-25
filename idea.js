@@ -24,19 +24,24 @@ class Idea {
   }
 
   updateQuality(vote) {
+    var qualityArray = ['Swill', 'Plausible', 'Genius', 'Unicorn'];
+    var i = qualityArray.indexOf(this.quality);
+    console.log(i);
+
     if(vote === 'up') {
-      if(this.quality === 'Plausible') {
-        this.quality = 'Genius';
-      } else if (this.quality === 'Swill') {
-        this.quality = 'Plausible';
+      console.log('hooray!')
+      if (i < qualityArray.length-1){
+        i++;
+        this.quality = qualityArray[i];
+        console.log(this.quality, 'this is the new quality')
       }
-    } else {
-      if(this.quality === 'Genius') {
-        this.quality = 'Plausible';
-      } else if (this.quality === 'Plausible') {
-        this.quality = 'Swill';
+    } else if(vote === 'down'){
+      if (i > 0){
+        i--;
+        this.quality = qualityArray[i];
       }
     }
+
   }
 
 }

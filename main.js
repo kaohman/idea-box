@@ -51,12 +51,14 @@ function createCardsOnReload(){
 
 function createCard(idea) {
   var cardHTML = `<div class="idea-box js-idea-card" data-id=${idea.id}>
-    <h2 class="js-text js-title-text" contenteditable="false">${idea.title}</h2>
-    <p class="js-text js-body-text" contenteditable="false">${idea.body}</p>
+    <div class="js-search">
+      <h2 class="js-text js-title-text" contenteditable="false">${idea.title}</h2>
+      <p class="js-text js-body-text" contenteditable="false">${idea.body}</p>
+    </div>
     <div class="idea-box-bottom">
       <img class="arrows js-down-vote" src="icons/downvote.svg">
       <img class="arrows js-up-vote" src="icons/upvote.svg">
-      <p class="quality">Quality: <span>${idea.quality}</span></p>
+      <p class="quality">Quality: <span class="js-quality">${idea.quality}</span></p>
       <img class="delete js-delete-button" src="icons/delete.svg">
     </div>
   </div>`;
@@ -89,10 +91,6 @@ function enableSaveButton() {
   saveButton.disabled = false;
 }
 
-// Upvote/Downvote Functionality
-
-
-
 
 /* card edit function */
 cardSection.addEventListener("dblclick", updateCard);
@@ -104,33 +102,6 @@ function updateCard(event) {
 
     document.body.addEventListener("keypress", saveTextOnEnter);
     document.body.addEventListener("click", saveTextOnClick);
-
-
-//     currentEvent = event.target;
-//     editText();
-
-//     document.body.addEventListener("keypress", function(event) {
-//       console.log("enter: " + event.target);
-//       if (event.code === 'Enter') {
-//         saveText();
-//       }
-//     })
-
-//     document.body.addEventListener("click", function(event) {
-//       console.log("click: " + event.target);
-//       if (!event.target.classList.contains("js-text")) {
-//         saveText();
-//       }
-//     })
-    
-//     // Use this a lot - refactor into function
-//     var cardId = event.target.parentElement.dataset.id;
-
-//     editText(event);
-//     document.body.addEventListener("keypress", enterSaveText);
-//     // Click - how to target element to save to local storage?
-//     document.body.addEventListener("click", clickSaveText);
-// // 
   }
 }
 
@@ -158,24 +129,11 @@ function saveTextOnClick(event) {
 
 function setUneditable() {
   currentEventTarget.contentEditable = false;
-
-
-// function setUneditable() {
-//   currentEvent.contentEditable = false;
-// function clickSaveText() {
-//   if (!event.target.classList.contains("js-text")) {
-//     // saveText(event);
-
-//     // updateIdea(cardId);
-//     saveOnClick();
-//   }
-
 }
 
 function updateIdea() {
-  var cardId = currentEventTarget.parentElement.dataset.id;
+  var cardId = currentEventTarget.parentElement.parentElement.dataset.id;
   var index = findIndexNumber(cardId);
-
   if (currentEventTarget.classList.contains("js-title-text")) {
     var newTitle = currentEventTarget.innerText;
     ideaArray[index].updateSelf(newTitle, 'title');
@@ -188,61 +146,62 @@ function updateIdea() {
   ideaArray[index].saveToStorage();
 }
 
-// function saveOnClick() {
-//   var editableFields = document.querySelectorAll(".js-text");
-//   for (i=0; i < editableFields.length; i++) {
-//     editableFields[i].contentEditable = false;
-//   }
-// }
-
-// function updateIdeaOnEnter(event) {
-//   var cardId = event.target.parentElement.dataset.id;
-//   var index = findIndexNumber(cardId);
-
-//   if (event.target.classList.contains("js-title-text")) {
-//     var newTitle = event.target.innerText;
-//     ideaArray[index].updateSelf(newTitle, 'title');
-//   } else if (event.target.classList.contains("js-body-text")) {
-//     var newBody = event.target.innerText; 
-//     ideaArray[index].updateSelf(newBody, 'body');
-//   };
-
-//   ideaArray[index].saveToStorage();
-// }
-
-// function clickSaveText(event) {
-//   console.log(event.target);
-//   if (!event.target.classList.contains("js-text")) {
-//     console.log(currentEvent);
-//     debugger
-//     // saveText(event);
-//     updateIdeaOnClick(currentEvent);
-//     saveOnClick();
-//   }
-// }
-
-
 /* live search function */
 var search = document.querySelector(".search-input");
 
 search.addEventListener("keyup", function() {
 var searchinput = this.value;
-var h2Element = document.querySelectorAll("h2");
-var pElement = document.querySelectorAll("p");
-console.log(searchinput + " input");
-    console.log(h2Element.length + " length");
-  for (i=0; i < h2Element.length; i++) {
-  if (h2Element[i].innerHTML.indexOf(searchinput) != -1) { 
-        console.log(h2Element[i].innerText + " showing")
-    h2Element[i].parentElement.style.display = "block";
-  }else if (h2Element[i].innerHTML.indexOf("searchinput") <= -1) {
-        console.log(h2Element[i].innerText + " not showing")
-    h2Element[i].parentElement.style.display = "none";
+var seachTextDiv = document.querySelectorAll(".js-search");
+  for (i=0; i < seachTextDiv.length; i++) {
+  if (seachTextDiv[i].innerText.indexOf(searchinput) != -1) { 
+    seachTextDiv[i].parentElement.style.display = "block";
+  }else if (seachTextDiv[i].innerText.indexOf(searchinput) <= -1) {
+    seachTextDiv[i].parentElement.style.display = "none";
   }
 }
 });
 
+// filter by quality
 
+var swillButton = document.querySelector(".js-swill");
+var plausibleButton = document.querySelector(".js-plausible");
+var geniusButton = document.querySelector(".js-genius");
+var unicornButton = document.querySelector(".js-unicorn");
+var resetButton = document.querySelector(".js-reset");
+
+swillButton.addEventListener('click', function(){
+  filterByQuality('Swill');
+});
+plausibleButton.addEventListener('click', function(){
+  filterByQuality('Plausible');
+});
+geniusButton.addEventListener('click', function(){
+  filterByQuality('Genius');
+});
+unicornButton.addEventListener('click', function(){
+  filterByQuality('Unicorn');
+});
+resetButton.addEventListener('click', resetFilters);
+
+function filterByQuality(quality) {
+  var qualityType = document.querySelectorAll('.js-quality');
+  for (i=0; i < qualityType.length; i++) {
+  if (qualityType[i].innerText.indexOf(quality) != -1) { 
+    qualityType[i].parentElement.parentElement.parentElement.style.display = 'block';
+  }else if (qualityType[i].innerText.indexOf(quality) <= -1) {
+    qualityType[i].parentElement.parentElement.parentElement.style.display = 'none';
+  }
+}
+}
+
+function resetFilters() {
+  var cards = document.querySelectorAll('.js-idea-card');
+  for(var i = 0; i < cards.length; i++) {
+    cards[i].style.display = 'block';
+  }
+}
+
+// quality up/down votes//
 cardSection.addEventListener('click', function(){
   var votebutton;
   if (event.target.classList.contains('js-up-vote')) {
