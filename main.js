@@ -52,8 +52,8 @@ function createCard(idea) {
     <h2 class="js-text js-title-text" contenteditable="false">${idea.title}</h2>
     <p class="js-text js-body-text" contenteditable="false">${idea.body}</p>
     <div class="idea-box-bottom">
-      <img class="arrows" src="icons/downvote.svg">
-      <img class="arrows" src="icons/upvote.svg">
+      <img class="arrows js-down-vote" src="icons/downvote.svg">
+      <img class="arrows js-up-vote" src="icons/upvote.svg">
       <p class="quality">Quality: <span>${idea.quality}</span></p>
       <img class="delete js-delete-button" src="icons/delete.svg">
     </div>
@@ -154,5 +154,31 @@ function updateIdea(event) {
   };
 
   ideaArray[index].saveToStorage();
+}
+
+
+cardSection.addEventListener('click', function(){
+  var votebutton;
+  if (event.target.classList.contains('js-up-vote')) {
+    votebutton = 'up';
+    vote(event, votebutton);
+  } else if (event.target.classList.contains('js-down-vote')) {
+    votebutton = 'down'
+    vote(event, votebutton);
+  }
+})
+
+function vote(event, votebutton) {
+  var cardId = event.target.parentElement.parentElement.dataset.id;
+  var index = findIndexNumber(cardId);
+  if (votebutton === 'up') {
+    ideaArray[index].updateQuality('up');
+    event.target.nextElementSibling.firstElementChild.innerText = ideaArray[index].quality;
+  } else if (votebutton === 'down') {
+    ideaArray[index].updateQuality('down');
+    event.target.nextElementSibling.nextElementSibling.firstElementChild.innerText = ideaArray[index].quality;
+  };
+  ideaArray[index].saveToStorage();
+  ideaArray.splice(index, 1, ideaArray[index]);
 }
 
