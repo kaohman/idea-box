@@ -9,10 +9,11 @@ body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
   display: grid;
-  grid-template-rows: 100px 330px 1fr;
+  grid-template-rows: 100px 330px 100px 1fr;
   grid-template-areas: 
   "header"
   "input"
+  "quality"
   "ideabox";
 }
 
@@ -153,6 +154,10 @@ p {
   border-top: 2px solid #D2CCCD;
   height: 40px;
   padding: 5px 10px;
+}
+
+.filter-by-quality{
+  grid-area: quality;
 }
 
 /* media query */

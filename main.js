@@ -51,14 +51,14 @@ function createCardsOnReload(){
 
 function createCard(idea) {
   var cardHTML = `<div class="idea-box js-idea-card" data-id=${idea.id}>
-    <div class="js-text-search">
+    <div class="js-search">
       <h2 class="js-text js-title-text" contenteditable="false">${idea.title}</h2>
       <p class="js-text js-body-text" contenteditable="false">${idea.body}</p>
     </div>
     <div class="idea-box-bottom">
       <img class="arrows js-down-vote" src="icons/downvote.svg">
       <img class="arrows js-up-vote" src="icons/upvote.svg">
-      <p class="quality">Quality: <span>${idea.quality}</span></p>
+      <p class="quality">Quality: <span class="js-quality">${idea.quality}</span></p>
       <img class="delete js-delete-button" src="icons/delete.svg">
     </div>
   </div>`;
@@ -132,7 +132,7 @@ function setUneditable() {
 }
 
 function updateIdea() {
-  var cardId = currentEventTarget.parentElement.dataset.id;
+  var cardId = currentEventTarget.parentElement.parentElement.dataset.id;
   var index = findIndexNumber(cardId);
   if (currentEventTarget.classList.contains("js-title-text")) {
     var newTitle = currentEventTarget.innerText;
@@ -151,19 +151,55 @@ var search = document.querySelector(".search-input");
 
 search.addEventListener("keyup", function() {
 var searchinput = this.value;
-var seachTextDiv = document.querySelectorAll(".js-text-search");
+var seachTextDiv = document.querySelectorAll(".js-search");
   for (i=0; i < seachTextDiv.length; i++) {
   if (seachTextDiv[i].innerText.indexOf(searchinput) != -1) { 
     seachTextDiv[i].parentElement.style.display = "block";
-  }else if (seachTextDiv[i].innerText.indexOf("searchinput") <= -1) {
+  }else if (seachTextDiv[i].innerText.indexOf(searchinput) <= -1) {
     seachTextDiv[i].parentElement.style.display = "none";
   }
 }
 });
 
+// filter by quality
 
+var swillButton = document.querySelector(".js-swill");
+var plausibleButton = document.querySelector(".js-plausible");
+var geniusButton = document.querySelector(".js-genius");
+var unicornButton = document.querySelector(".js-unicorn");
+var resetButton = document.querySelector(".js-reset");
 
+swillButton.addEventListener('click', function(){
+  filterByQuality('Swill');
+});
+plausibleButton.addEventListener('click', function(){
+  filterByQuality('Plausible');
+});
+geniusButton.addEventListener('click', function(){
+  filterByQuality('Genius');
+});
+unicornButton.addEventListener('click', function(){
+  filterByQuality('Unicorn');
+});
+resetButton.addEventListener('click', resetFilters);
 
+function filterByQuality(quality) {
+  var qualityType = document.querySelectorAll('.js-quality');
+  for (i=0; i < qualityType.length; i++) {
+  if (qualityType[i].innerText.indexOf(quality) != -1) { 
+    qualityType[i].parentElement.parentElement.parentElement.style.display = 'block';
+  }else if (qualityType[i].innerText.indexOf(quality) <= -1) {
+    qualityType[i].parentElement.parentElement.parentElement.style.display = 'none';
+  }
+}
+}
+
+function resetFilters() {
+  var cards = document.querySelectorAll('.js-idea-card');
+  for(var i = 0; i < cards.length; i++) {
+    cards[i].style.display = 'block';
+  }
+}
 
 // quality up/down votes//
 cardSection.addEventListener('click', function(){
