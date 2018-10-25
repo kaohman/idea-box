@@ -5,6 +5,8 @@ var cardSection = document.querySelector('.js-card-section');
 
 var ideaArray = [];
 
+var currentEvent;
+
 window.addEventListener('load', createCardsOnReload);
 
 saveButton.addEventListener('click', createNewIdea);
@@ -93,66 +95,89 @@ function enableSaveButton() {
 
 
 /* card edit function */
-function editText(event) {
-    event.target.contentEditable = true;
-}
+cardSection.addEventListener("dblclick", updateCard);
 
-cardSection.addEventListener("dblclick", function (event) {
+function updateCard(event) {
   if (event.target.classList.contains("js-text")) {
-    // Use this a lot - refactor into function
-    var cardId = event.target.parentElement.dataset.id;
+    currentEvent = event.target;
+    editText();
 
-    editText(event);
-    document.body.addEventListener("keypress", enterSaveText);
-    // Click - how to target element to save to local storage?
-    document.body.addEventListener("click", clickSaveText(cardId));
+    document.body.addEventListener("keypress", function(event) {
+      console.log("enter: " + event.target);
+      if (event.code === 'Enter') {
+        saveText();
+      }
+    })
+
+    document.body.addEventListener("click", function(event) {
+      console.log("click: " + event.target);
+      if (!event.target.classList.contains("js-text")) {
+        saveText();
+      }
+    })
   }
-});
+}
 
-// Check if we can just use clickSaveText function
+function editText() {
+    currentEvent.contentEditable = true;
+}
+
 function saveText(event) {
-  event.target.contentEditable = false;
-}
-
-function saveOnClick() {
-  var editableFields = document.querySelectorAll(".js-text");
-  for (i=0; i < editableFields.length; i++) {
-    editableFields[i].contentEditable = false;
-  }
-}
-
-function enterSaveText(event) {
-  if (event.code === 'Enter') {
-
-    updateIdea(event);    
-    saveText(event); 
-    document.body.removeEventListener("keypress", enterSaveText);
-    document.body.removeEventListener("click", clickSaveText);
-    // return false;
-  }                        
+  updateIdea();    
+  setUneditable(); 
+  document.body.removeEventListener("keypress", saveText);
+  document.body.removeEventListener("click", saveText);
 }; 
 
-function clickSaveText(cardId) {
-  if (!event.target.classList.contains("js-text")) {
-    // saveText(event);
-
-    // updateIdea(cardId);
-    saveOnClick();
-  }
+function setUneditable() {
+  currentEvent.contentEditable = false;
 }
 
-function updateIdea(event) {
-  var cardId = event.target.parentElement.dataset.id;
+function updateIdea() {
+  var cardId = currentEvent.parentElement.dataset.id;
   var index = findIndexNumber(cardId);
 
-  if (event.target.classList.contains("js-title-text")) {
-    var newTitle = event.target.innerText;
+  if (currentEvent.classList.contains("js-title-text")) {
+    var newTitle = currentEvent.innerText;
     ideaArray[index].updateSelf(newTitle, 'title');
-  } else if (event.target.classList.contains("js-body-text")) {
-    var newBody = event.target.innerText; 
+  } else if (currentEvent.classList.contains("js-body-text")) {
+    var newBody = currentEvent.innerText; 
     ideaArray[index].updateSelf(newBody, 'body');
   };
 
   ideaArray[index].saveToStorage();
 }
+
+// function saveOnClick() {
+//   var editableFields = document.querySelectorAll(".js-text");
+//   for (i=0; i < editableFields.length; i++) {
+//     editableFields[i].contentEditable = false;
+//   }
+// }
+
+// function updateIdeaOnEnter(event) {
+//   var cardId = event.target.parentElement.dataset.id;
+//   var index = findIndexNumber(cardId);
+
+//   if (event.target.classList.contains("js-title-text")) {
+//     var newTitle = event.target.innerText;
+//     ideaArray[index].updateSelf(newTitle, 'title');
+//   } else if (event.target.classList.contains("js-body-text")) {
+//     var newBody = event.target.innerText; 
+//     ideaArray[index].updateSelf(newBody, 'body');
+//   };
+
+//   ideaArray[index].saveToStorage();
+// }
+
+// function clickSaveText(event) {
+//   console.log(event.target);
+//   if (!event.target.classList.contains("js-text")) {
+//     console.log(currentEvent);
+//     debugger
+//     // saveText(event);
+//     updateIdeaOnClick(currentEvent);
+//     saveOnClick();
+//   }
+// }
 
