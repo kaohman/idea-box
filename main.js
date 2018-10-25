@@ -52,8 +52,8 @@ function createCard(idea) {
     <h2 class="js-text js-title-text" contenteditable="false">${idea.title}</h2>
     <p class="js-text js-body-text" contenteditable="false">${idea.body}</p>
     <div class="idea-box-bottom">
-      <img class="arrows" src="icons/downvote.svg">
-      <img class="arrows" src="icons/upvote.svg">
+      <img class="arrows js-down-vote" src="icons/downvote.svg">
+      <img class="arrows js-up-vote" src="icons/upvote.svg">
       <p class="quality">Quality: <span>${idea.quality}</span></p>
       <img class="delete js-delete-button" src="icons/delete.svg">
     </div>
@@ -155,4 +155,36 @@ function updateIdea(event) {
 
   ideaArray[index].saveToStorage();
 }
+
+cardSection.addEventListener('click', function(){
+  if (event.target.classList.contains('js-up-vote')) {
+    upvote(event);
+  } else if (event.target.classList.contains('js-down-vote')) {
+    downvote(event);
+  }
+})
+
+function upvote(event) {
+  var cardId = event.target.parentElement.parentElement.dataset.id;
+  var index = findIndexNumber(cardId);
+  ideaArray[index].updateQuality('up');
+  ideaArray[index].saveToStorage();
+  // debugger;
+
+    event.target.nextElementSibling.firstElementChild.innerText = ideaArray[index].quality;
+  // event.target.parentElementclassList.contains('js-quality').innerText = ideaArray[index].quality;
+  // console.log(event.target.closest('.js-quality')); 
+}
+function downvote(event) {
+  var cardId = event.target.parentElement.parentElement.dataset.id;
+  var index = findIndexNumber(cardId);
+  ideaArray[index].updateQuality('down');
+  ideaArray[index].saveToStorage();
+  // debugger;
+
+    event.target.nextElementSibling.nextElementSibling.firstElementChild.innerText = ideaArray[index].quality;
+  // event.target.parentElementclassList.contains('js-quality').innerText = ideaArray[index].quality;
+  // console.log(event.target.closest('.js-quality')); 
+}
+
 
