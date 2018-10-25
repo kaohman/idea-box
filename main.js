@@ -5,7 +5,7 @@ var cardSection = document.querySelector('.js-card-section');
 
 var ideaArray = [];
 
-var currentEvent;
+var currentEventTarget;
 
 window.addEventListener('load', createCardsOnReload);
 
@@ -99,49 +99,50 @@ cardSection.addEventListener("dblclick", updateCard);
 
 function updateCard(event) {
   if (event.target.classList.contains("js-text")) {
-    currentEvent = event.target;
+    currentEventTarget = event.target;
     editText();
 
-    document.body.addEventListener("keypress", function(event) {
-      console.log("enter: " + event.target);
-      if (event.code === 'Enter') {
-        saveText();
-      }
-    })
-
-    document.body.addEventListener("click", function(event) {
-      console.log("click: " + event.target);
-      if (!event.target.classList.contains("js-text")) {
-        saveText();
-      }
-    })
+    document.body.addEventListener("keypress", saveTextOnEnter);
+    document.body.addEventListener("click", saveTextOnClick);
   }
 }
 
 function editText() {
-    currentEvent.contentEditable = true;
+    currentEventTarget.contentEditable = true;
 }
 
-function saveText(event) {
-  updateIdea();    
-  setUneditable(); 
-  document.body.removeEventListener("keypress", saveText);
-  document.body.removeEventListener("click", saveText);
+function saveTextOnEnter(event) {
+  if (event.code === 'Enter') {
+    updateIdea();    
+    setUneditable(); 
+    document.body.removeEventListener("keypress", saveTextOnEnter);
+    document.body.removeEventListener("click", saveTextOnClick);
+  }
 }; 
 
+function saveTextOnClick(event) {
+  if (!event.target.classList.contains("js-text")) {
+    updateIdea();    
+    setUneditable(); 
+    document.body.removeEventListener("keypress", saveTextOnEnter);
+    document.body.removeEventListener("click", saveTextOnClick);
+  }
+};
+
 function setUneditable() {
-  currentEvent.contentEditable = false;
+  currentEventTarget.contentEditable = false;
 }
 
 function updateIdea() {
-  var cardId = currentEvent.parentElement.dataset.id;
+  var cardId = currentEventTarget.parentElement.dataset.id;
   var index = findIndexNumber(cardId);
 
-  if (currentEvent.classList.contains("js-title-text")) {
-    var newTitle = currentEvent.innerText;
+  if (currentEventTarget.classList.contains("js-title-text")) {
+    var newTitle = currentEventTarget.innerText;
     ideaArray[index].updateSelf(newTitle, 'title');
-  } else if (currentEvent.classList.contains("js-body-text")) {
-    var newBody = currentEvent.innerText; 
+  } else if (currentEventTarget.classList.contains("js-body-text")) {
+    var newBody = currentEventTarget.innerText; 
+    console.log(ideaArray[index])
     ideaArray[index].updateSelf(newBody, 'body');
   };
 
