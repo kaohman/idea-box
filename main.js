@@ -54,8 +54,8 @@ function createCard(idea) {
     <h2 class="js-text js-title-text" contenteditable="false">${idea.title}</h2>
     <p class="js-text js-body-text" contenteditable="false">${idea.body}</p>
     <div class="idea-box-bottom">
-      <img class="arrows" src="icons/downvote.svg">
-      <img class="arrows" src="icons/upvote.svg">
+      <img class="arrows js-down-vote" src="icons/downvote.svg">
+      <img class="arrows js-up-vote" src="icons/upvote.svg">
       <p class="quality">Quality: <span>${idea.quality}</span></p>
       <img class="delete js-delete-button" src="icons/delete.svg">
     </div>
@@ -99,6 +99,7 @@ cardSection.addEventListener("dblclick", updateCard);
 
 function updateCard(event) {
   if (event.target.classList.contains("js-text")) {
+
     currentEvent = event.target;
     editText();
 
@@ -115,6 +116,15 @@ function updateCard(event) {
         saveText();
       }
     })
+    
+    // Use this a lot - refactor into function
+    var cardId = event.target.parentElement.dataset.id;
+
+    editText(event);
+    document.body.addEventListener("keypress", enterSaveText);
+    // Click - how to target element to save to local storage?
+    document.body.addEventListener("click", clickSaveText);
+
   }
 }
 
@@ -129,8 +139,17 @@ function saveText(event) {
   document.body.removeEventListener("click", saveText);
 }; 
 
+
 function setUneditable() {
   currentEvent.contentEditable = false;
+function clickSaveText() {
+  if (!event.target.classList.contains("js-text")) {
+    // saveText(event);
+
+    // updateIdea(cardId);
+    saveOnClick();
+  }
+
 }
 
 function updateIdea() {
@@ -180,4 +199,52 @@ function updateIdea() {
 //     saveOnClick();
 //   }
 // }
+
+
+/* live search function */
+var search = document.querySelector(".search-input");
+
+search.addEventListener("keyup", function() {
+var searchinput = this.value;
+var h2Element = document.querySelectorAll("h2");
+var pElement = document.querySelectorAll("p");
+console.log(searchinput + " input");
+    console.log(h2Element.length + " length");
+  for (i=0; i < h2Element.length; i++) {
+  if (h2Element[i].innerHTML.indexOf(searchinput) != -1) { 
+        console.log(h2Element[i].innerText + " showing")
+    h2Element[i].parentElement.style.display = "block";
+  }else if (h2Element[i].innerHTML.indexOf("searchinput") <= -1) {
+        console.log(h2Element[i].innerText + " not showing")
+    h2Element[i].parentElement.style.display = "none";
+  }
+}
+});
+
+
+cardSection.addEventListener('click', function(){
+  var votebutton;
+  if (event.target.classList.contains('js-up-vote')) {
+    votebutton = 'up';
+    vote(event, votebutton);
+  } else if (event.target.classList.contains('js-down-vote')) {
+    votebutton = 'down'
+    vote(event, votebutton);
+  }
+})
+
+function vote(event, votebutton) {
+  var cardId = event.target.parentElement.parentElement.dataset.id;
+  var index = findIndexNumber(cardId);
+  if (votebutton === 'up') {
+    ideaArray[index].updateQuality('up');
+    event.target.nextElementSibling.firstElementChild.innerText = ideaArray[index].quality;
+  } else if (votebutton === 'down') {
+    ideaArray[index].updateQuality('down');
+    event.target.nextElementSibling.nextElementSibling.firstElementChild.innerText = ideaArray[index].quality;
+  };
+  ideaArray[index].saveToStorage();
+  ideaArray.splice(index, 1, ideaArray[index]);
+}
+
 
