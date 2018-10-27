@@ -13,14 +13,16 @@ cardSection.addEventListener('click', function(event){
 });
 
 // Add submit button disabled based on character count
-ideaInputs[0].addEventListener('input', enableSaveButton);
+ideaInputs[0].addEventListener('input', function(event) {
+  enableButton(saveButton);
+});
 
 function clearInputs() {
   // REFACTOR FOR LOOP
   for (var i = 0; i < ideaInputs.length; i++) {
     ideaInputs[i].value = '';
   };
-  disableSaveButton();
+  disableButton(saveButton);
 }
 
 function createCard(idea) {
@@ -71,12 +73,12 @@ function deleteCard(event) {
   event.target.closest('.js-idea-card').remove();
 }
 
-function disableSaveButton() {
-  saveButton.disabled = true;
+function disableButton(button) {
+  button.disabled = true;
 }
 
-function enableSaveButton() {
-  saveButton.disabled = false;
+function enableButton(button) {
+  button.disabled = false;
 }
 
 function findIndexNumber(objId) {
