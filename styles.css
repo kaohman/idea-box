@@ -7,9 +7,10 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: #F9F9FA;
   font-family: 'Open Sans', sans-serif;
   display: grid;
-  grid-template-rows: 100px 330px 100px 1fr;
+  grid-template-rows: 100px 350px 100px 1fr;
   grid-template-areas: 
   "header"
   "input"
@@ -85,11 +86,21 @@ label {
 }
 
 form input {
+  font-size: 1em;
   width: 800px;
   height: 40px;
   display: block;
   border: 2px solid #D2CCCD;
   border-radius: 5px;
+}
+
+.textarea {
+  font-size: 0.8em;
+  width: 800px;
+  height: 100px;
+  display: block;
+  border: 2px solid #D2CCCD;
+  border-radius: 5px; 
 }
 
 form button {
@@ -113,7 +124,8 @@ form button:disabled {
 /* the idea box section */
 .idea-box-section {
   grid-area: ideabox;
-  background-color: #F9F9FA;
+  display: flex;
+  flex-direction: column;
 }
 
 .idea-box {
@@ -128,6 +140,10 @@ h2 {
   margin: 20px;
   color: #6E646B;
   font-size: 2em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 756px;
+  white-space: nowrap;
 }
 
 p {
@@ -154,10 +170,24 @@ p {
   border-top: 2px solid #D2CCCD;
   height: 40px;
   padding: 5px 10px;
+  box-sizing: content-box;
 }
 
+/* filter by qaulity section */
 .filter-by-quality{
   grid-area: quality;
+  display: flex;
+  justify-content: center;
+}
+
+.filter-button {
+  color: #FFFFFF;
+  font-size: 1.5em;
+  background-color: #6E646B;
+  margin: 10px;
+  padding: 10px;
+  height: 50px;
+  border-radius: 5px;
 }
 
 /* media query */
@@ -180,6 +210,11 @@ p {
 
   /* the input section */
 
+  h2 {
+    width: 94vw;
+  }
+  /* fix this above to get that exact */
+
   form {
     width: 98.78vw;
   }
@@ -191,6 +226,10 @@ p {
   form button {
     width: 98.17vw;
   }
+
+  .textarea {
+    width: 97.56vw;
+}
 
   /* the idea box section */
 
@@ -206,6 +245,7 @@ p {
     grid-template-areas: 
     "header"
     "input"
+    "quality"
     "ideabox";
   }
 
