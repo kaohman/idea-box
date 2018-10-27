@@ -256,17 +256,16 @@ function countCharacters(input) {
 
 
 // Show 10 at a time
+var numCounter = 10;
+var shownArray = [];
+
 document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShown);
 
-  var numCounter = 10;
 
 function calculateNumberShown() {
   numCounter += 10;
   updateShownArray();
 } 
-
-var shownArray = [];
-
 
 function updateShownArray() {
   var allCards = document.querySelectorAll('.js-idea-card');
