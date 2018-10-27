@@ -241,7 +241,8 @@ var shownArray = [];
 
 function updateShownArray() {
   shownArray = ideaArray.filter(function(eachIdea, indexNum, fullArray) {
-      return indexNum < numCounter;
+      if(ideaArray.length < 10) {
+        return indexNum < numCounter;
   })
   showCards();
 }
