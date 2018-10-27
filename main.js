@@ -12,17 +12,14 @@ cardSection.addEventListener('click', function(event){
   }
 });
 
-// Add submit button disabled based on character count
-ideaInputs[0].addEventListener('input', function(event) {
-  enableButton(saveButton);
-});
+
 
 function clearInputs() {
-  ideaInputs.forEach(function(){ideaInputs[i].value = ''});
+  ideaInputs.forEach(function(idea) {
+    idea.value = '';
+  });
   disableButton(saveButton);
 };
-
-
 
 function createCard(idea) {
   var cardHTML = `<div class='idea-box js-idea-card' data-id=${idea.id}>
@@ -168,6 +165,9 @@ document.querySelector(".js-genius").addEventListener('click', function(){
 document.querySelector(".js-unicorn").addEventListener('click', function(){
   filterByQuality('Unicorn');
 });
+document.querySelector(".js-magic").addEventListener('click', function(){
+  filterByQuality('Magic');
+});
 document.querySelector(".js-reset").addEventListener('click', resetFilters);
 
 function filterByQuality(quality) {
@@ -231,6 +231,36 @@ function calculateNumberShown() {
   numCounter += 10;
 }
 
+// Character Count
+
+// Add submit button disabled based on character count
+ideaInputs[0].addEventListener('input', function(event) {
+  if (ideaInputs[1].value.length > 0) {
+    enableButton(saveButton);
+  }
+});
+ideaInputs[1].addEventListener('input', function(event) {
+  if (ideaInputs[0].value.length > 0) {
+    enableButton(saveButton);
+  }
+});
+
+ideaInputs[0].addEventListener('keyup', function(event) {
+  countCharacters(this);
+});
+ideaInputs[1].addEventListener('keyup', function(event) {
+  countCharacters(this);
+});
+
+function countCharacters(input) {
+  var maxLength = 5;
+  console.log(input.value)
+  if (input.value.length > maxLength) {
+    input.value = input.value.substring(0, maxLength);
+    // disableButton(saveButton);
+    alert('Text is too long!');
+  }
+}
 
 
 
