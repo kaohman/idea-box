@@ -18,11 +18,11 @@ ideaInputs[0].addEventListener('input', function(event) {
 });
 
 function clearInputs() {
-  ideaInputs.forEach(function(){ideaInputs[i].value = ''});
+  ideaInputs.forEach(function(idea) {
+    idea.value = '';
+  });
   disableButton(saveButton);
 };
-
-
 
 function createCard(idea) {
   var cardHTML = `<div class='idea-box js-idea-card' data-id=${idea.id}>
@@ -52,13 +52,16 @@ function createCardsOnReload(){
       createCard(parsedCard);
     }
   }
+
+  ideaArray.reverse();
 }
 
 function createNewIdea() {
   var idea = new Idea(ideaInputs[0].value, ideaInputs[1].value);
-  ideaArray.push(idea);
+  ideaArray.unshift(idea);
   idea.saveToStorage();
   createCard(idea);
+  updateShownArray();
   clearInputs();
 }
 
@@ -144,12 +147,12 @@ function updateIdea() {
 
 
 document.querySelector(".search-input").addEventListener("keyup", function() {
-var searchinput = this.value;
+var searchinput = this.value.toLowerCase();
 var seachTextDiv = document.querySelectorAll('.js-search');
   for (i=0; i < seachTextDiv.length; i++) {
-  if (seachTextDiv[i].innerText.indexOf(searchinput) != -1) { 
+  if (seachTextDiv[i].innerText.toLowerCase().indexOf(searchinput) != -1) { 
     seachTextDiv[i].parentElement.style.display = 'block';
-  }else if (seachTextDiv[i].innerText.indexOf(searchinput) <= -1) {
+  }else if (seachTextDiv[i].innerText.toLowerCase().indexOf(searchinput) <= -1) {
     seachTextDiv[i].parentElement.style.display = 'none';
   }
 }
@@ -221,9 +224,8 @@ function vote(event, votebutton) {
 // Show 10 at a time
 document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShown())
 
-var shownArray = ideaArray.slice(0, shownNumber);
 
-var shownNumber = numCounter;
+
 
   var numCounter = 10;
 
@@ -231,12 +233,32 @@ function calculateNumberShown() {
   numCounter += 10;
 }
 
+// we create the ideaArray. from that we create a shown array in a new showCard Function. 
 
+var shownArray = [];
 
+// ideaArray.slice(0, numCounter);
 
+function updateShownArray() {
+  shownArray = ideaArray.filter(function(eachIdea, indexNum, fullArray) {
+      return indexNum < numCounter;
+  })
+  showCards();
+}
+ 
+function showCards(numOfCards) {
+  var cards = document.querySelectorAll('.js-idea-card');
 
+    shownArray.forEach(function(card) {
+      if(cards.length < numCounter) {
+      card.style.display = 'block';
+    }
+  })
+}
 
+// function showTheArray() {
 
+// }
 
 
 
