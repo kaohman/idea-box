@@ -29,9 +29,10 @@ function createNewIdea() {
 };
 
 function clearInputs() {
-  for (var i = 0; i < ideaInputs.length; i++) {
-    ideaInputs[i].value = '';
-  };
+  ideaInputs.forEach(function(){ideaInputs[i].value = ''})
+  // for (var i = 0; i < ideaInputs.length; i++) {
+  //   ideaInputs[i].value = '';
+  // };
   disableSaveButton();
 }
 
