@@ -259,13 +259,29 @@ function countCharacters(input) {
 var numCounter = 10;
 var shownArray = [];
 
-document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShown);
+document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShownUp);
+document.querySelector('.js-show-less-button').addEventListener('click', calculateNumberShownDown);
+document.querySelector('.js-show-all-button').addEventListener('click', calculateNumberShownAll);
 
-
-function calculateNumberShown() {
+function calculateNumberShownUp() {
   numCounter += 10;
   updateShownArray();
 } 
+
+function calculateNumberShownDown() {
+  if(numCounter === 10) {
+    return;
+  } else {
+    numCounter -= 10;
+  }
+  updateShownArray();
+} 
+
+function calculateNumberShownAll() {
+  numCounter = ideaArray.length;
+  updateShownArray();
+}
+
 
 function updateShownArray() {
   var allCards = document.querySelectorAll('.js-idea-card');
