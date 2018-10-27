@@ -45,12 +45,12 @@ function createCardsOnReload(){
 
       var idea = new Idea(parsedCard.title, parsedCard.body, parsedCard.quality, parsedCard.id);
       ideaArray.push(idea);
-
       createCard(parsedCard);
     }
   }
 
   ideaArray.reverse();
+  updateShownArray();
 }
 
 function createNewIdea() {
@@ -221,17 +221,7 @@ function vote(event, votebutton) {
 }
 
 
-// Show 10 at a time
-document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShown())
 
-
-
-
-  var numCounter = 10;
-
-function calculateNumberShown() {
-  numCounter += 10;
-} 
 
 // Character Count
 
@@ -255,8 +245,7 @@ ideaInputs[1].addEventListener('keyup', function(event) {
 });
 
 function countCharacters(input) {
-  var maxLength = 5;
-  console.log(input.value)
+  var maxLength = 120;
   if (input.value.length > maxLength) {
     input.value = input.value.substring(0, maxLength);
     // disableButton(saveButton);
@@ -265,31 +254,49 @@ function countCharacters(input) {
 }
 
 
+
+// Show 10 at a time
+document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShown);
+
+  var numCounter = 10;
+
+function calculateNumberShown() {
+  numCounter += 10;
+  updateShownArray();
+} 
+
 var shownArray = [];
 
-// ideaArray.slice(0, numCounter);
 
 function updateShownArray() {
-  shownArray = ideaArray.filter(function(eachIdea, indexNum, fullArray) {
-      if(ideaArray.length < 10) {
-        return indexNum < numCounter;
-  })
-  showCards();
-}
- 
-function showCards(numOfCards) {
-  var cards = document.querySelectorAll('.js-idea-card');
+  var allCards = document.querySelectorAll('.js-idea-card');
+  var cardsArray = Array.from(allCards);
+  shownArray = cardsArray.filter(function(card, index){
+    if(index < numCounter){
+    return card;
+    }
+  });
 
-    shownArray.forEach(function(card) {
-      if(cards.length < numCounter) {
-      card.style.display = 'block';
+  shownArray.forEach(function(card) {
+    card.style.display = 'block';
+  })
+
+  cardsArray.forEach(function(card, index) {
+    if(index > numCounter-1) {
+      card.style.display = 'none';
     }
   })
+
 }
 
-// function showTheArray() {
 
+// function showCards() {
+//   shownArray.forEach(function(card) {
+//     createCard(card);
+//   })
 // }
+
+
 
 
 

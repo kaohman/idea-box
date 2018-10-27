@@ -26,14 +26,11 @@ class Idea {
   updateQuality(vote) {
     var qualityArray = ['Swill', 'Plausible', 'Genius', 'Unicorn', 'Magic'];
     var i = qualityArray.indexOf(this.quality);
-    console.log(i);
 
     if(vote === 'up') {
-      console.log('hooray!')
       if (i < qualityArray.length-1){
         i++;
         this.quality = qualityArray[i];
-        console.log(this.quality, 'this is the new quality')
       }
     } else if(vote === 'down'){
       if (i > 0){

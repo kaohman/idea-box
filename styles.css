@@ -15,7 +15,8 @@ body {
   "header"
   "input"
   "quality"
-  "ideabox";
+  "ideabox"
+  "showmore";
 }
 
 img {
@@ -180,8 +181,14 @@ p {
   display: flex;
   justify-content: center;
 }
+.show-more-section{
+  grid-area: showmore;
+  display: flex;
+  justify-content: center;
+}
 
-.filter-button {
+.filter-button,
+.show-more-button {
   color: #FFFFFF;
   font-size: 1.5em;
   background-color: #6E646B;
