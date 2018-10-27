@@ -289,12 +289,6 @@ function updateShownArray() {
 }
 
 
-// function showCards() {
-//   shownArray.forEach(function(card) {
-//     createCard(card);
-//   })
-// }
-
 
 
 
