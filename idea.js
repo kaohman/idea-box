@@ -24,7 +24,7 @@ class Idea {
   }
 
   updateQuality(vote) {
-    var qualityArray = ['Swill', 'Plausible', 'Genius', 'Unicorn'];
+    var qualityArray = ['Swill', 'Plausible', 'Genius', 'Unicorn', 'Magic'];
     var i = qualityArray.indexOf(this.quality);
     console.log(i);
 
