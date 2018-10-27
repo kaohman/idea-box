@@ -9,6 +9,7 @@
   <meta name="keywords"
     content="idea, ideabox, turing project">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="icons/box.png">
   <link rel="stylesheet" type="text/css" href="styles.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
@@ -28,19 +29,22 @@
         <input class="js-idea-inputs" type="text">
       </label>
       <label>Body
-        <input class="js-idea-inputs" type="text">
+        <textarea class="js-idea-inputs textarea" type="text"></textarea>
       </label>
       <button disabled class="js-save-button">Save</button>
     </form>
   </section>
   <section class="filter-by-quality">
-    <button class="js-swill">Swill</button>
-    <button class="js-plausible">Plausible</button>
-    <button class="js-genius">Genius</button>
-    <button class="js-unicorn">Unicorn</button>
-    <button class="js-reset">Reset</button>
+    <button class="js-swill filter-button">Swill</button>
+    <button class="js-plausible filter-button">Plausible</button>
+    <button class="js-genius filter-button">Genius</button>
+    <button class="js-unicorn filter-button">Unicorn</button>
+    <button class="js-reset filter-button">Reset</button>
   </section>
   <section class="idea-box-section js-card-section">
+  </section>
+  <section class="js-show-more">
+    <button class="js-show-more-button">Show More </button>
   </section>
   <script src="idea.js"></script>
   <script src="main.js"></script>

@@ -18,12 +18,11 @@ ideaInputs[0].addEventListener('input', function(event) {
 });
 
 function clearInputs() {
-  // REFACTOR FOR LOOP
-  for (var i = 0; i < ideaInputs.length; i++) {
-    ideaInputs[i].value = '';
-  };
+  ideaInputs.forEach(function(){ideaInputs[i].value = ''});
   disableButton(saveButton);
-}
+};
+
+
 
 function createCard(idea) {
   var cardHTML = `<div class='idea-box js-idea-card' data-id=${idea.id}>
@@ -141,9 +140,10 @@ function updateIdea() {
 
 
 /* live search function */
-var search = document.querySelector('.search-input');
 
-search.addEventListener('keyup', function() {
+
+
+document.querySelector(".search-input").addEventListener("keyup", function() {
 var searchinput = this.value;
 var seachTextDiv = document.querySelectorAll('.js-search');
   for (i=0; i < seachTextDiv.length; i++) {
@@ -155,27 +155,20 @@ var seachTextDiv = document.querySelectorAll('.js-search');
 }
 });
 
-
 // filter by quality
-var swillButton = document.querySelector('.js-swill');
-var plausibleButton = document.querySelector('.js-plausible');
-var geniusButton = document.querySelector('.js-genius');
-var unicornButton = document.querySelector('.js-unicorn');
-var resetButton = document.querySelector('.js-reset');
-
-swillButton.addEventListener('click', function(){
+document.querySelector(".js-swill").addEventListener('click', function(){
   filterByQuality('Swill');
 });
-plausibleButton.addEventListener('click', function(){
+document.querySelector(".js-plausible").addEventListener('click', function(){
   filterByQuality('Plausible');
 });
-geniusButton.addEventListener('click', function(){
+document.querySelector(".js-genius").addEventListener('click', function(){
   filterByQuality('Genius');
 });
-unicornButton.addEventListener('click', function(){
+document.querySelector(".js-unicorn").addEventListener('click', function(){
   filterByQuality('Unicorn');
 });
-resetButton.addEventListener('click', resetFilters);
+document.querySelector(".js-reset").addEventListener('click', resetFilters);
 
 function filterByQuality(quality) {
   var qualityType = document.querySelectorAll('.js-quality');
@@ -223,5 +216,29 @@ function vote(event, votebutton) {
   ideaArray[index].saveToStorage();
   ideaArray.splice(index, 1, ideaArray[index]);
 }
+
+
+// Show 10 at a time
+document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShown())
+
+var shownArray = ideaArray.slice(0, shownNumber);
+
+var shownNumber = numCounter;
+
+  var numCounter = 10;
+
+function calculateNumberShown() {
+  numCounter += 10;
+}
+
+
+
+
+
+
+
+
+
+
 
 
