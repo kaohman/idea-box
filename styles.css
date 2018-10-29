@@ -114,7 +114,8 @@ form button {
   border-radius: 5px;
 }
 
-form button:disabled {
+form button:disabled,
+.show-buttons:disabled {
   background-color: #C2C1C0;
 }
 
