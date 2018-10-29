@@ -45,10 +45,11 @@ function createCardsOnReload(){
 
       var idea = new Idea(parsedCard.title, parsedCard.body, parsedCard.quality, parsedCard.id);
       ideaArray.push(idea);
-
       createCard(parsedCard);
     }
   }
+  ideaArray.reverse();
+  updateShownArray();
 }
 
 function createNewIdea() {
@@ -217,20 +218,6 @@ function vote(event, votebutton) {
   ideaArray.splice(index, 1, ideaArray[index]);
 }
 
-
-// Show 10 at a time
-document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShown())
-
-var shownArray = ideaArray.slice(0, shownNumber);
-
-var shownNumber = numCounter;
-
-  var numCounter = 10;
-
-function calculateNumberShown() {
-  numCounter += 10;
-}
-
 // Character Count
 
 // Add submit button disabled based on character count
@@ -256,7 +243,6 @@ var numberCount = document.querySelector(".character-count")
 
 function countCharacters(input) {
   var maxLength = 120;
-  console.log(input.value)
   if (input.value.length > maxLength) {
     input.value = input.value.substring(0, maxLength);
     // disableButton(saveButton);
@@ -265,6 +251,54 @@ function countCharacters(input) {
   numberCount.innerText = input.value.length;
 }
 
+// Show 10 at a time
+var numCounter = 10;
+var shownArray = [];
+
+document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShownUp);
+document.querySelector('.js-show-less-button').addEventListener('click', calculateNumberShownDown);
+document.querySelector('.js-show-all-button').addEventListener('click', calculateNumberShownAll);
+
+function calculateNumberShownUp() {
+  numCounter += 10;
+  updateShownArray();
+} 
+
+function calculateNumberShownDown() {
+  if(numCounter === 10) {
+    return;
+  } else {
+    numCounter -= 10;
+  }
+  updateShownArray();
+} 
+
+function calculateNumberShownAll() {
+  numCounter = ideaArray.length;
+  updateShownArray();
+}
+
+
+function updateShownArray() {
+  var allCards = document.querySelectorAll('.js-idea-card');
+  var cardsArray = Array.from(allCards);
+  shownArray = cardsArray.filter(function(card, index){
+    if(index < numCounter){
+    return card;
+    }
+  });
+
+  shownArray.forEach(function(card) {
+    card.style.display = 'block';
+  })
+
+  cardsArray.forEach(function(card, index) {
+    if(index > numCounter-1) {
+      card.style.display = 'none';
+    }
+  })
+
+}
 
 
 
