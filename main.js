@@ -49,16 +49,13 @@ function createCardsOnReload(){
       createCard(parsedCard);
     }
   }
-
-  ideaArray.reverse();
 }
 
 function createNewIdea() {
   var idea = new Idea(ideaInputs[0].value, ideaInputs[1].value);
-  ideaArray.unshift(idea);
+  ideaArray.push(idea);
   idea.saveToStorage();
   createCard(idea);
-  updateShownArray();
   clearInputs();
 }
 
@@ -144,12 +141,12 @@ function updateIdea() {
 
 
 document.querySelector(".search-input").addEventListener("keyup", function() {
-var searchinput = this.value.toLowerCase();
+var searchinput = this.value;
 var seachTextDiv = document.querySelectorAll('.js-search');
   for (i=0; i < seachTextDiv.length; i++) {
-  if (seachTextDiv[i].innerText.toLowerCase().indexOf(searchinput) != -1) { 
+  if (seachTextDiv[i].innerText.indexOf(searchinput) != -1) { 
     seachTextDiv[i].parentElement.style.display = 'block';
-  }else if (seachTextDiv[i].innerText.toLowerCase().indexOf(searchinput) <= -1) {
+  }else if (seachTextDiv[i].innerText.indexOf(searchinput) <= -1) {
     seachTextDiv[i].parentElement.style.display = 'none';
   }
 }
@@ -224,14 +221,15 @@ function vote(event, votebutton) {
 // Show 10 at a time
 document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShown())
 
+var shownArray = ideaArray.slice(0, shownNumber);
 
-
+var shownNumber = numCounter;
 
   var numCounter = 10;
 
 function calculateNumberShown() {
   numCounter += 10;
-} 
+}
 
 // Character Count
 
@@ -254,42 +252,19 @@ ideaInputs[1].addEventListener('keyup', function(event) {
   countCharacters(this);
 });
 
+var numberCount = document.querySelector(".character-count")
+
 function countCharacters(input) {
-  var maxLength = 5;
+  var maxLength = 120;
   console.log(input.value)
   if (input.value.length > maxLength) {
     input.value = input.value.substring(0, maxLength);
     // disableButton(saveButton);
     alert('Text is too long!');
   }
+  numberCount.innerText = input.value.length;
 }
 
-
-var shownArray = [];
-
-// ideaArray.slice(0, numCounter);
-
-function updateShownArray() {
-  shownArray = ideaArray.filter(function(eachIdea, indexNum, fullArray) {
-      if(ideaArray.length < 10) {
-        return indexNum < numCounter;
-  })
-  showCards();
-}
- 
-function showCards(numOfCards) {
-  var cards = document.querySelectorAll('.js-idea-card');
-
-    shownArray.forEach(function(card) {
-      if(cards.length < numCounter) {
-      card.style.display = 'block';
-    }
-  })
-}
-
-// function showTheArray() {
-
-// }
 
 
 
