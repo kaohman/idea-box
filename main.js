@@ -48,17 +48,15 @@ function createCardsOnReload(){
       createCard(parsedCard);
     }
   }
-
   ideaArray.reverse();
   updateShownArray();
 }
 
 function createNewIdea() {
   var idea = new Idea(ideaInputs[0].value, ideaInputs[1].value);
-  ideaArray.unshift(idea);
+  ideaArray.push(idea);
   idea.saveToStorage();
   createCard(idea);
-  updateShownArray();
   clearInputs();
 }
 
@@ -144,12 +142,12 @@ function updateIdea() {
 
 
 document.querySelector(".search-input").addEventListener("keyup", function() {
-var searchinput = this.value.toLowerCase();
+var searchinput = this.value;
 var seachTextDiv = document.querySelectorAll('.js-search');
   for (i=0; i < seachTextDiv.length; i++) {
-  if (seachTextDiv[i].innerText.toLowerCase().indexOf(searchinput) != -1) { 
+  if (seachTextDiv[i].innerText.indexOf(searchinput) != -1) { 
     seachTextDiv[i].parentElement.style.display = 'block';
-  }else if (seachTextDiv[i].innerText.toLowerCase().indexOf(searchinput) <= -1) {
+  }else if (seachTextDiv[i].innerText.indexOf(searchinput) <= -1) {
     seachTextDiv[i].parentElement.style.display = 'none';
   }
 }
@@ -220,9 +218,6 @@ function vote(event, votebutton) {
   ideaArray.splice(index, 1, ideaArray[index]);
 }
 
-
-
-
 // Character Count
 
 // Add submit button disabled based on character count
@@ -244,6 +239,8 @@ ideaInputs[1].addEventListener('keyup', function(event) {
   countCharacters(this);
 });
 
+var numberCount = document.querySelector(".character-count")
+
 function countCharacters(input) {
   var maxLength = 120;
   if (input.value.length > maxLength) {
@@ -251,9 +248,8 @@ function countCharacters(input) {
     // disableButton(saveButton);
     alert('Text is too long!');
   }
+  numberCount.innerText = input.value.length;
 }
-
-
 
 // Show 10 at a time
 var numCounter = 10;
@@ -303,9 +299,6 @@ function updateShownArray() {
   })
 
 }
-
-
-
 
 
 
