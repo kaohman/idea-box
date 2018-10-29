@@ -50,6 +50,8 @@ function createCardsOnReload(){
   }
   ideaArray.reverse();
   updateShownArray();
+
+  setShowButtons();
 }
 
 function createNewIdea() {
@@ -58,6 +60,8 @@ function createNewIdea() {
   idea.saveToStorage();
   createCard(idea);
   clearInputs();
+
+  setShowButtons();
 }
 
 function deleteCard(event) {
@@ -68,7 +72,10 @@ function deleteCard(event) {
   ideaArray.splice(index, 1);
 
   event.target.closest('.js-idea-card').remove();
+
+  setShowButtons(); 
 }
+
 
 function disableButton(button) {
   button.disabled = true;
@@ -118,6 +125,17 @@ function saveTextOnClick(event) {
   event.target.removeEventListener('blur', saveTextOnClick);
 };
 
+function setShowButtons() {
+  if (ideaArray.length > 10) {
+    enableButton(document.querySelector('.js-show-more-button'));
+    enableButton(document.querySelector('.js-show-all-button'));
+  } else {
+    disableButton(document.querySelector('.js-show-more-button'));
+    disableButton(document.querySelector('.js-show-less-button'));
+    disableButton(document.querySelector('.js-show-all-button'));
+  }
+}
+
 function setUneditable() {
   event.target.contentEditable = false;
 }
@@ -125,6 +143,7 @@ function setUneditable() {
 function updateIdea() {
   var cardId = event.target.parentElement.parentElement.dataset.id;
   var index = findIndexNumber(cardId);
+  
   if (event.target.classList.contains('js-title-text')) {
     var newTitle = event.target.innerText;
     ideaArray[index].updateSelf(newTitle, 'title');
@@ -175,12 +194,15 @@ function filterByQuality(quality) {
   var qualityType = document.querySelectorAll('.js-quality');
   // REFACTOR FOR LOOP
   for (i=0; i < qualityType.length; i++) {
-  if (qualityType[i].innerText.indexOf(quality) != -1) { 
-    qualityType[i].parentElement.parentElement.parentElement.style.display = 'block';
-  }else if (qualityType[i].innerText.indexOf(quality) <= -1) {
-    qualityType[i].parentElement.parentElement.parentElement.style.display = 'none';
+    if (qualityType[i].innerText.indexOf(quality) != -1) { 
+      qualityType[i].parentElement.parentElement.parentElement.style.display = 'block';
+    } else if (qualityType[i].innerText.indexOf(quality) <= -1) {
+      qualityType[i].parentElement.parentElement.parentElement.style.display = 'none';
+    }
   }
-}
+  disableButton(document.querySelector('.js-show-less-button'));
+  disableButton(document.querySelector('.js-show-more-button'));
+  disableButton(document.querySelector('.js-show-all-button'));
 }
 
 function resetFilters() {
@@ -188,6 +210,7 @@ function resetFilters() {
   for(var i = 0; i < cards.length; i++) {
     cards[i].style.display = 'block';
   }
+  setShowButtons();
 }
 
 
@@ -262,20 +285,27 @@ document.querySelector('.js-show-all-button').addEventListener('click', calculat
 function calculateNumberShownUp() {
   numCounter += 10;
   updateShownArray();
+  if (numCounter > ideaArray.length) {
+    disableButton(document.querySelector('.js-show-more-button'));
+    disableButton(document.querySelector('.js-show-all-button'));
+  }
+  enableButton(document.querySelector('.js-show-less-button'));
 } 
 
 function calculateNumberShownDown() {
-  if(numCounter === 10) {
-    return;
-  } else {
-    numCounter -= 10;
-  }
+  numCounter = 10;
   updateShownArray();
+  disableButton(document.querySelector('.js-show-less-button'));
+  enableButton(document.querySelector('.js-show-more-button'));
+  enableButton(document.querySelector('.js-show-all-button'));
 } 
 
 function calculateNumberShownAll() {
   numCounter = ideaArray.length;
   updateShownArray();
+  disableButton(document.querySelector('.js-show-more-button'));
+  enableButton(document.querySelector('.js-show-less-button'));
+  disableButton(document.querySelector('.js-show-all-button'));
 }
 
 
