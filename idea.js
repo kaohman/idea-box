@@ -28,7 +28,7 @@ class Idea {
     var i = qualityArray.indexOf(this.quality);
 
     if(vote === 'up') {
-      if (i < qualityArray.length-1){
+      if (i < qualityArray.length-1) {
         i++;
         this.quality = qualityArray[i];
       }
