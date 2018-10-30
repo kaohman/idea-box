@@ -1,30 +1,24 @@
 *,
 *:after,
 *:before {
-  box-sizing: border-box;  
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif; 
 }
 
 body {
   padding: 0;
   margin: 0;
   background-color: #F9F9FA;
-  font-family: 'Open Sans', sans-serif;
   display: grid;
   grid-template-rows: 100px 400px 100px 1fr;
   grid-template-areas: 
-  "header"
-  "input"
-  "quality"
-  "ideabox"
-  "showmore";
+    "header"
+    "input"
+    "quality"
+    "ideabox"
+    "showmore";
 }
 
-img {
-  width: 35px;
-  vertical-align: middle;
-}
-
-/* header */
 header {
   grid-area: header;
   background-color: #524649;
@@ -33,14 +27,64 @@ header {
 
 h1 {
   color: #B2A1B1;
-  font-weight: 800;
   font-size: 3em;
   display: inline-block;
   margin: 0;
 }
 
-.first-h1 {
-  color: #B2A1B1;
+h2 {
+  margin: 20px;
+  color: #6E646B;
+  font-size: 2em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 756px;
+  white-space: nowrap;
+}
+
+p {
+  margin: 20px;
+  color: #7C7879;
+  font-size: 1.5em;
+}
+
+img {
+  width: 35px;
+  vertical-align: middle;
+}
+
+label {
+  font-size: 2em;
+  color: #7C7879;
+}
+
+form {
+  margin: 10px auto;
+  width: 810px;
+}
+
+form input {
+  font-size: 1em;
+  width: 800px;
+  height: 40px;
+  display: block;
+  border: 2px solid #D2CCCD;
+  border-radius: 5px;
+}
+
+form button {
+  color: #FFFFFF;
+  font-size: 2em;
+  background-color: #6E646B;
+  width: 805px;
+  margin: 30px auto;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+form button:disabled,
+.show-buttons:disabled {
+  background-color: #C2C1C0;
 }
 
 .second-h1 {
@@ -68,31 +112,9 @@ h1 {
   background-color: #D2CCCD;
 }
 
-
-/* the input section */
 .input-section {
   grid-area: input;
   background-color: #EAEAEA;
-}
-
-form {
-  margin: 10px auto;
-  width: 810px;
-}
-
-label {
-  font-size: 2em;
-  font-weight: 100;
-  color: #7C7879;
-}
-
-form input {
-  font-size: 1em;
-  width: 800px;
-  height: 40px;
-  display: block;
-  border: 2px solid #D2CCCD;
-  border-radius: 5px;
 }
 
 .textarea {
@@ -104,26 +126,6 @@ form input {
   border-radius: 5px; 
 }
 
-form button {
-  color: #FFFFFF;
-  font-size: 2em;
-  background-color: #6E646B;
-  width: 805px;
-  margin: 30px auto;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-form button:disabled,
-.show-buttons:disabled {
-  background-color: #C2C1C0;
-}
-
-/*form button:hover {
-  background-color: #524649;
-}*/
-
-/* the idea box section */
 .idea-box-section {
   grid-area: ideabox;
   display: flex;
@@ -135,27 +137,10 @@ form button:disabled,
   border-radius: 5px;
   width: 800px;
   margin: 20px auto;
-  box-sizing: border-box;
 }
 
-h2 {
-  margin: 20px;
-  color: #6E646B;
-  font-size: 2em;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 756px;
-  white-space: nowrap;
-}
-
-p {
-  margin: 20px;
-  color: #7C7879;
-  font-size: 1.5em;
-}
 .quality {
   font-weight: bold;
-  margin: 20px;
   display: inline;
 }
 
@@ -172,13 +157,12 @@ p {
   border-top: 2px solid #D2CCCD;
   height: 40px;
   padding: 5px 10px;
-  box-sizing: content-box;
 }
 
-/* filter by qaulity section */
 .filter-by-quality{
   grid-area: quality;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 .show-more-section{
@@ -205,30 +189,22 @@ p {
     float: right;
 }
 
-/* media query */
+.show-button-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.show-buttons {
+  display: inline;
+  width: 150px;
+}
 
 @media screen and (max-width: 820px) {
-
-  /* header */
-
-  .search {
-    width: 48vw;
-  }
-
-  .search-input {
-    width: 39vw;
-  }
-
-  .search-svg {
-    width: 6vw;
-  }
-
-  /* the input section */
 
   h2 {
     width: 94vw;
   }
-  /* fix this above to get that exact */
 
   form {
     width: 98.78vw;
@@ -244,12 +220,22 @@ p {
 
   .textarea {
     width: 97.56vw;
-}
-
-  /* the idea box section */
+  }
 
   .idea-box {
     width: 97.56vw;
+  }
+
+  .search {
+    width: 48vw;
+  }
+
+  .search-input {
+    width: 39vw;
+  }
+
+  .search-svg {
+    width: 6vw;
   }
 
 }
@@ -264,7 +250,6 @@ p {
     "ideabox";
   }
 
-  /* header */
   header {
     display: flex;
     justify-content: center;
@@ -274,6 +259,18 @@ p {
   h1 {
     display: block;
     text-align: center;
+  }
+
+  form {
+    width: 98.78vw;
+  }
+
+  form input {
+    width: 97.56vw;
+  }
+
+  form button {
+    width: 98.17vw;
   }
 
   .search {
@@ -290,22 +287,6 @@ p {
     width: 45px;
   }
 
-  /* the input section */
-
-  form {
-    width: 98.78vw;
-  }
-
-  form input {
-    width: 97.56vw;
-  }
-
-  form button {
-    width: 98.17vw;
-  }
-
-  /* the idea box section */
-
   .idea-box {
     width: 97.56vw;
   }
@@ -313,5 +294,10 @@ p {
   .quality {
     margin: 0;
   }
+}
 
+@media screen and (max-width: 420px) {
+  .quality {
+    font-size: 1em;
+  }
 }

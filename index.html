@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>IDEABOX</title>
+  <meta name="description" content="a site to save the best and worst ideas">
+  <meta name="keywords" content="idea, ideabox, turing project">
   <link rel="stylesheet" type="text/css" href="normalize.css">
-  <meta name="description"
-    content="a site to save the best and worst ideas">
-  <meta name="keywords"
-    content="idea, ideabox, turing project">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="icons/box.png">
   <link rel="stylesheet" type="text/css" href="styles.css">
@@ -15,13 +13,15 @@
 </head>
 <body>
   <header>
-    <h1><span class="first-h1">ideabox</span><span class="second-h1">triples</span></h1>
-      <div class="search">
-        <input class="search-input" type="text" placeholder="Search">
-        <button class="search-svg" >
-          <img src="icons/search.svg">
-        </button>
-      <div>
+    <h1>
+      <span class="first-h1">ideabox</span><span class="second-h1">triples</span>
+    </h1>
+    <div class="search">
+      <input class="search-input" type="text" placeholder="Search">
+      <button class="search-svg" >
+        <img src="icons/search.svg" alt="search">
+      </button>
+    <div>
   </header>
   <section class="input-section">
     <form>
@@ -29,7 +29,7 @@
         <input class="js-idea-inputs" type="text">
       </label>
       <label>Body
-        <textarea class="js-idea-inputs textarea" type="text"></textarea>
+        <textarea class="js-idea-inputs textarea"></textarea>
         <p class="number-display"><span class="character-count">0</span>/120</p>
       </label>
       <button disabled class="js-save-button">Save</button>
@@ -46,9 +46,9 @@
   <section class="idea-box-section js-card-section">
   </section>
   <section class="show-more-section">
-    <button disabled class="show-buttons js-show-more-button">Show More </button>
-    <button disabled class="show-buttons js-show-less-button">Show Less </button>
-    <button disabled class="show-buttons js-show-all-button">Show All </button>
+    <button disabled class="show-buttons js-show-more-button">Show More</button>
+    <button disabled class="show-buttons js-show-less-button">Show Less</button>
+    <button disabled class="show-buttons js-show-all-button">Show All</button>
   </section>
   <script src="idea.js"></script>
   <script src="main.js"></script>
