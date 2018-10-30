@@ -4,43 +4,33 @@ var ideaInputs = document.querySelectorAll('.js-idea-inputs');
 var numberCount = document.querySelector(".character-count")
 var numCounter = 10;
 var saveButton = document.querySelector('.js-save-button');
-var shownArray = [];
 
 window.addEventListener('load', createCardsOnReload);
 saveButton.addEventListener('click', createNewIdea);
-cardSection.addEventListener('click', function(event){
-  if (event.target.classList.contains('js-delete-button')) {
-    deleteCard(event);
-  }
-});
 
 cardSection.addEventListener('dblclick', updateCard);
-cardSection.addEventListener('click', function(){
-  var votebutton;
-  if (event.target.classList.contains('js-up-vote')) {
-    votebutton = 'up';
-    vote(event, votebutton);
+cardSection.addEventListener('click', function(event) {
+  if (event.target.classList.contains('js-delete-button')) {
+    deleteCard(event);
+  } else if (event.target.classList.contains('js-up-vote')) {
+    vote(event, 'up');
   } else if (event.target.classList.contains('js-down-vote')) {
-    votebutton = 'down'
-    vote(event, votebutton);
+    vote(event, 'down');
   }
 });
 
-ideaInputs[0].addEventListener('input', function(event) {
-  if (ideaInputs[1].value.length > 0) {
-    enableButton(saveButton);
-  }
-});
-ideaInputs[0].addEventListener('keyup', function(event) {
-  countCharacters(this);
-});
-ideaInputs[1].addEventListener('input', function(event) {
-  if (ideaInputs[0].value.length > 0) {
-    enableButton(saveButton);
-  }
-});
-ideaInputs[1].addEventListener('keyup', function(event) {
-  countCharacters(this);
+ideaInputs.forEach(idea => {
+  idea.addEventListener('input', function(event) {
+    if((ideaInputs[0].value.length > 0) && (ideaInputs[1].value.length > 0)) {
+      enableButton(saveButton);
+    } else {
+      disableButton(saveButton);
+    };
+  });
+
+  idea.addEventListener('keyup', function(event) {
+    countCharacters(this);
+  });
 });
 
 
@@ -109,7 +99,6 @@ function countCharacters(input) {
   var maxLength = 120;
   if (input.value.length > maxLength) {
     input.value = input.value.substring(0, maxLength);
-    // disableButton(saveButton);
     alert('Text is too long!');
   }
   numberCount.innerText = input.value.length;
@@ -131,12 +120,10 @@ function createCard(idea) {
   cardSection.insertAdjacentHTML('afterbegin', cardHTML);
 };
 
-function createCardsOnReload(){
+function createCardsOnReload() {
   for(var key in localStorage) {
     if(localStorage.hasOwnProperty(key)) {
-      var card = localStorage.getItem(key);
-      var parsedCard = JSON.parse(card);
-
+      var parsedCard = JSON.parse(localStorage.getItem(key));
       var idea = new Idea(parsedCard.title, parsedCard.body, parsedCard.quality, parsedCard.id);
       ideaArray.push(idea);
       createCard(parsedCard);
@@ -144,7 +131,6 @@ function createCardsOnReload(){
   }
   ideaArray.reverse();
   updateShownArray();
-
   setShowButtons();
 };
 
@@ -154,19 +140,14 @@ function createNewIdea() {
   idea.saveToStorage();
   createCard(idea);
   clearInputs();
-
   setShowButtons();
 };
 
 function deleteCard(event) {
-  var cardId = event.target.parentElement.parentElement.dataset.id;
-  
-  var index = findIndexNumber(cardId);
+  var index = findIndexNumber(event.target.parentElement.parentElement.dataset.id);
   ideaArray[index].deleteFromStorage();
   ideaArray.splice(index, 1);
-
   event.target.closest('.js-idea-card').remove();
-
   setShowButtons(); 
 };
 
@@ -193,13 +174,10 @@ function filterByQuality(quality) {
       qualityType[i].parentElement.parentElement.parentElement.style.display = 'none';
     }
   }
-  disableButton(document.querySelector('.js-show-less-button'));
-  disableButton(document.querySelector('.js-show-more-button'));
-  disableButton(document.querySelector('.js-show-all-button'));
+  disableShowButtons();
 };
 
 function findIndexNumber(objId) {
-  // REFACTOR FOR LOOP
   for (var i = 0; i < ideaArray.length; i++) {
     if (ideaArray[i].id === objId) {
       return i
@@ -209,6 +187,7 @@ function findIndexNumber(objId) {
 
 function resetFilters() {
   var cards = document.querySelectorAll('.js-idea-card');
+
   var cardsArray = Array.from(cards);
   var cardsToShowOnReset = cardsArray.filter((card, i) => {
     return i < 10;
@@ -240,10 +219,15 @@ function setShowButtons() {
     enableButton(document.querySelector('.js-show-more-button'));
     enableButton(document.querySelector('.js-show-all-button'));
   } else {
-    disableButton(document.querySelector('.js-show-more-button'));
-    disableButton(document.querySelector('.js-show-less-button'));
-    disableButton(document.querySelector('.js-show-all-button'));
+    disableShowButtons();
   }
+};
+
+function disableShowButtons() {
+  var buttons = document.querySelectorAll('.show-buttons');
+  buttons.forEach(button => {
+    disableButton(button);
+  });
 };
 
 function setUneditable() {
@@ -259,43 +243,29 @@ function updateCard(event) {
 };
 
 function updateIdea() {
-  var cardId = event.target.parentElement.parentElement.dataset.id;
-  var index = findIndexNumber(cardId);
-
+  var index = findIndexNumber(event.target.parentElement.parentElement.dataset.id);
   if (event.target.classList.contains('js-title-text')) {
-    var newTitle = event.target.innerText;
-    ideaArray[index].updateSelf(newTitle, 'title');
-  } else if (event.target.classList.contains('js-body-text')) {
-    var newBody = event.target.innerText; 
-    ideaArray[index].updateSelf(newBody, 'body');
+    ideaArray[index].updateSelf(event.target.innerText, 'title');
+  } else {
+    ideaArray[index].updateSelf(event.target.innerText, 'body');
   };
 
   ideaArray[index].saveToStorage();
 };
 
 function updateShownArray() {
-  var allCards = document.querySelectorAll('.js-idea-card');
-  var cardsArray = Array.from(allCards);
-  shownArray = cardsArray.filter(function(card, index){
-    if(index < numCounter){
-    return card;
-    }
-  });
-
-  shownArray.forEach(function(card) {
-    card.style.display = 'block';
-  })
-
+  var cardsArray = Array.from(document.querySelectorAll('.js-idea-card'));
   cardsArray.forEach(function(card, index) {
-    if(index > numCounter-1) {
+    if(index < numCounter) {
+      card.style.display = 'block';
+    } else {
       card.style.display = 'none';
     }
-  })
+  });
 };
 
 function vote(event, votebutton) {
-  var cardId = event.target.parentElement.parentElement.dataset.id;
-  var index = findIndexNumber(cardId);
+  var index = findIndexNumber(event.target.parentElement.parentElement.dataset.id);
   if (votebutton === 'up') {
     ideaArray[index].updateQuality('up');
     event.target.nextElementSibling.firstElementChild.innerText = ideaArray[index].quality;
