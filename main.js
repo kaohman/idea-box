@@ -54,12 +54,12 @@ document.querySelector(".js-magic").addEventListener('click', function(){
 document.querySelector(".js-reset").addEventListener('click', resetFilters);
 
 document.querySelector(".search-input").addEventListener("keyup", function() {
-  var searchinput = this.value;
+  var searchinput = this.value.toLowerCase();
   var seachTextDiv = document.querySelectorAll('.js-search');
-    for (i=0; i < seachTextDiv.length; i++) {
-    if (seachTextDiv[i].innerText.indexOf(searchinput) != -1) { 
+  for (i=0; i < seachTextDiv.length; i++) {
+    if (seachTextDiv[i].innerText.toLowerCase().indexOf(searchinput) != -1) { 
       seachTextDiv[i].parentElement.style.display = 'block';
-    }else if (seachTextDiv[i].innerText.indexOf(searchinput) <= -1) {
+    } else {
       seachTextDiv[i].parentElement.style.display = 'none';
     }
   }
