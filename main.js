@@ -1,7 +1,7 @@
 var cardSection = document.querySelector('.js-card-section');
 var ideaArray = [];
 var ideaInputs = document.querySelectorAll('.js-idea-inputs');
-var numberCount = document.querySelector(".character-count")
+var numberCount = document.querySelectorAll(".character-count");
 var numCounter = 10;
 var saveButton = document.querySelector('.js-save-button');
 
@@ -19,7 +19,7 @@ cardSection.addEventListener('click', function(event) {
   }
 });
 
-ideaInputs.forEach(idea => {
+ideaInputs.forEach((idea, i) => {
   idea.addEventListener('input', function(event) {
     if((ideaInputs[0].value.length > 0) && (ideaInputs[1].value.length > 0)) {
       enableButton(saveButton);
@@ -29,7 +29,7 @@ ideaInputs.forEach(idea => {
   });
 
   idea.addEventListener('keyup', function(event) {
-    countCharacters(this);
+    countCharacters(this, i);
   });
 });
 
@@ -95,13 +95,13 @@ function clearInputs() {
   disableButton(saveButton);
 };
 
-function countCharacters(input) {
+function countCharacters(input, index) {
   var maxLength = 120;
   if (input.value.length > maxLength) {
     input.value = input.value.substring(0, maxLength);
     alert('Text is too long!');
   }
-  numberCount.innerText = input.value.length;
+  numberCount[index].innerText = input.value.length;
 };
 
 function createCard(idea) {

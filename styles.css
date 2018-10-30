@@ -10,7 +10,7 @@ body {
   margin: 0;
   background-color: #F9F9FA;
   display: grid;
-  grid-template-rows: 100px 400px 100px 1fr;
+  grid-template-rows: 100px 420px 100px 1fr;
   grid-template-areas: 
     "header"
     "input"
@@ -21,12 +21,12 @@ body {
 
 header {
   grid-area: header;
-  background-color: #524649;
+  background-color: #342A31;
   padding: 10px;
 }
 
 h1 {
-  color: #B2A1B1;
+  color: #afa5cd;
   font-size: 3em;
   display: inline-block;
   margin: 0;
@@ -59,7 +59,7 @@ label {
 }
 
 form {
-  margin: 10px auto;
+  margin: 20px auto;
   width: 810px;
 }
 
@@ -68,23 +68,38 @@ form input {
   width: 800px;
   height: 40px;
   display: block;
-  border: 2px solid #D2CCCD;
+  border: 2px solid #D6D3DA;
   border-radius: 5px;
 }
 
 form button {
   color: #FFFFFF;
   font-size: 2em;
-  background-color: #6E646B;
+  background-color: #5F5B6C;
   width: 805px;
   margin: 30px auto;
   padding: 10px;
   border-radius: 5px;
 }
 
+textarea {
+  font-size: 0.8em;
+  width: 800px;
+  height: 100px;
+  display: block;
+  border: 2px solid #D6D3DA;
+  border-radius: 5px; 
+}
+
 form button:disabled,
 .show-buttons:disabled {
-  background-color: #C2C1C0;
+  background-color: #BECFCD;
+}
+
+form button:hover:enabled,
+.show-buttons:hover:enabled,
+.filter-button:hover {
+  background-color: #342A31;
 }
 
 .second-h1 {
@@ -102,28 +117,23 @@ form button:disabled,
 .search-input {
   display: inline-block;
   font-size: 2em;
-  border: 2px solid #D2CCCD;
+  border: 2px solid #D6D3DA;
   border-radius: 5px 0px 0px 5px;
 }
 
 .search-svg {
   display: inline-block;
   border-radius: 0px 5px 5px 0px;
-  background-color: #D2CCCD;
+  background-color: #D6D3DA;
 }
 
 .input-section {
   grid-area: input;
-  background-color: #EAEAEA;
+  background-color: #ECF2F2;
 }
 
-.textarea {
-  font-size: 0.8em;
-  width: 800px;
-  height: 100px;
-  display: block;
-  border: 2px solid #D2CCCD;
-  border-radius: 5px; 
+.idea-inputs{
+  margin-top: 10px;
 }
 
 .idea-box-section {
@@ -133,7 +143,7 @@ form button:disabled,
 }
 
 .idea-box {
-  border: 2px solid #D2CCCD;
+  border: 2px solid #D6D3DA;
   border-radius: 5px;
   width: 800px;
   margin: 20px auto;
@@ -154,7 +164,7 @@ form button:disabled,
 }
 
 .idea-box-bottom {
-  border-top: 2px solid #D2CCCD;
+  border-top: 2px solid #D6D3DA;
   height: 40px;
   padding: 5px 10px;
 }
@@ -169,13 +179,14 @@ form button:disabled,
   grid-area: showmore;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .filter-button,
 .show-buttons {
   color: #FFFFFF;
   font-size: 1.5em;
-  background-color: #6E646B;
+  background-color: #5F5B6C;
   margin: 10px;
   padding: 10px;
   height: 50px;
@@ -247,7 +258,8 @@ form button:disabled,
     "header"
     "input"
     "quality"
-    "ideabox";
+    "ideabox"
+    "showmore";
   }
 
   header {
