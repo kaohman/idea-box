@@ -45,35 +45,28 @@ ideaInputs[1].addEventListener('keyup', function(event) {
 
 
 // Dylan working on these event listeners
-// query selector all then identify which button within single event listener
-document.querySelector(".js-swill").addEventListener('click', function(){
-  filterByQuality('Swill');
+
+document.querySelector('.filter-by-quality').addEventListener('click', event => {
+  if (event.target.classList.contains('js-filter-by-quality-buttons')) {
+    filterByQuality(event.target.innerText)
+  };
 });
-document.querySelector(".js-plausible").addEventListener('click', function(){
-  filterByQuality('Plausible');
-});
-document.querySelector(".js-genius").addEventListener('click', function(){
-  filterByQuality('Genius');
-});
-document.querySelector(".js-unicorn").addEventListener('click', function(){
-  filterByQuality('Unicorn');
-});
-document.querySelector(".js-magic").addEventListener('click', function(){
-  filterByQuality('Magic');
-});
+
 document.querySelector(".js-reset").addEventListener('click', resetFilters);
 
-document.querySelector(".search-input").addEventListener("keyup", function() {
+document.querySelector(".search-input").addEventListener("keyup", liveSearch);
+
+function liveSearch() {
   var searchinput = this.value;
-  var seachTextDiv = document.querySelectorAll('.js-search');
-    for (i=0; i < seachTextDiv.length; i++) {
-    if (seachTextDiv[i].innerText.indexOf(searchinput) != -1) { 
-      seachTextDiv[i].parentElement.style.display = 'block';
-    }else if (seachTextDiv[i].innerText.indexOf(searchinput) <= -1) {
-      seachTextDiv[i].parentElement.style.display = 'none';
+  var searchTextDiv = document.querySelectorAll('.js-search');
+  searchTextDiv.forEach(input => {
+    if (input.innerText.indexOf(searchinput) != -1) { 
+      input.parentElement.style.display = 'block';
+    } else if (input.innerText.indexOf(searchinput) <= -1) {
+      input.parentElement.style.display = 'none';
     }
-  }
-});
+  })   
+};
 
 document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShownUp);
 document.querySelector('.js-show-less-button').addEventListener('click', calculateNumberShownDown);
@@ -82,25 +75,25 @@ document.querySelector('.js-show-all-button').addEventListener('click', calculat
 function calculateNumberShownAll() {
   numCounter = ideaArray.length;
   updateShownArray();
+  disableButton(document.querySelector('.js-show-all-button'));
   disableButton(document.querySelector('.js-show-more-button'));
   enableButton(document.querySelector('.js-show-less-button'));
-  disableButton(document.querySelector('.js-show-all-button'));
 };
 
 function calculateNumberShownDown() {
   numCounter = 10;
   updateShownArray();
   disableButton(document.querySelector('.js-show-less-button'));
-  enableButton(document.querySelector('.js-show-more-button'));
   enableButton(document.querySelector('.js-show-all-button'));
+  enableButton(document.querySelector('.js-show-more-button'));
 };
 
 function calculateNumberShownUp() {
   numCounter += 10;
   updateShownArray();
   if (numCounter > ideaArray.length) {
-    disableButton(document.querySelector('.js-show-more-button'));
     disableButton(document.querySelector('.js-show-all-button'));
+    disableButton(document.querySelector('.js-show-more-button'));
   }
   enableButton(document.querySelector('.js-show-less-button'));
 }; 
@@ -216,9 +209,13 @@ function findIndexNumber(objId) {
 
 function resetFilters() {
   var cards = document.querySelectorAll('.js-idea-card');
-  for(var i = 0; i < cards.length; i++) {
-    cards[i].style.display = 'block';
-  }
+  var cardsArray = Array.from(cards);
+  var cardsToShowOnReset = cardsArray.filter((card, i) => {
+    return i < 10;
+  }); 
+  cardsToShowOnReset.forEach(card => {
+    card.style.display = 'block';
+  });
   setShowButtons();
 };
 
