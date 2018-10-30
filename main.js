@@ -1,15 +1,15 @@
 var cardSection = document.querySelector('.js-card-section');
-var ideaArray = [];
 var ideaInputs = document.querySelectorAll('.js-idea-inputs');
-var numberCount = document.querySelector(".character-count")
 var numCounter = 10;
 var saveButton = document.querySelector('.js-save-button');
+var ideaArray = [];
 
 window.addEventListener('load', createCardsOnReload);
+
 saveButton.addEventListener('click', createNewIdea);
 
 cardSection.addEventListener('dblclick', updateCard);
-cardSection.addEventListener('click', function(event) {
+cardSection.addEventListener('click', event => {
   if (event.target.classList.contains('js-delete-button')) {
     deleteCard(event);
   } else if (event.target.classList.contains('js-up-vote')) {
@@ -19,8 +19,8 @@ cardSection.addEventListener('click', function(event) {
   }
 });
 
-ideaInputs.forEach(idea => {
-  idea.addEventListener('input', function(event) {
+ideaInputs.forEach((idea, i) => {
+  idea.addEventListener('input', event => {
     if((ideaInputs[0].value.length > 0) && (ideaInputs[1].value.length > 0)) {
       enableButton(saveButton);
     } else {
@@ -28,13 +28,10 @@ ideaInputs.forEach(idea => {
     };
   });
 
-  idea.addEventListener('keyup', function(event) {
-    countCharacters(this);
+  idea.addEventListener('keyup', event => {
+    countCharacters(this, i);
   });
 });
-
-
-// Dylan working on these event listeners
 
 document.querySelector('.filter-by-quality').addEventListener('click', event => {
   if (event.target.classList.contains('js-filter-by-quality-buttons')) {
@@ -45,18 +42,6 @@ document.querySelector('.filter-by-quality').addEventListener('click', event => 
 document.querySelector(".js-reset").addEventListener('click', resetFilters);
 
 document.querySelector(".search-input").addEventListener("keyup", liveSearch);
-
-function liveSearch() {
-  var searchinput = this.value;
-  var searchTextDiv = document.querySelectorAll('.js-search');
-  searchTextDiv.forEach(input => {
-    if (input.innerText.indexOf(searchinput) != -1) { 
-      input.parentElement.style.display = 'block';
-    } else if (input.innerText.indexOf(searchinput) <= -1) {
-      input.parentElement.style.display = 'none';
-    }
-  })   
-};
 
 document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShownUp);
 document.querySelector('.js-show-less-button').addEventListener('click', calculateNumberShownDown);
@@ -95,13 +80,13 @@ function clearInputs() {
   disableButton(saveButton);
 };
 
-function countCharacters(input) {
+function countCharacters(input, index) {
   var maxLength = 120;
   if (input.value.length > maxLength) {
     input.value = input.value.substring(0, maxLength);
     alert('Text is too long!');
   }
-  numberCount.innerText = input.value.length;
+  document.querySelectorAll(".character-count")[index].innerText = input.value.length;
 };
 
 function createCard(idea) {
@@ -166,14 +151,13 @@ function enableButton(button) {
 
 function filterByQuality(quality) {
   var qualityType = document.querySelectorAll('.js-quality');
-  // REFACTOR FOR LOOP
-  for (i=0; i < qualityType.length; i++) {
-    if (qualityType[i].innerText.indexOf(quality) != -1) { 
-      qualityType[i].parentElement.parentElement.parentElement.style.display = 'block';
-    } else if (qualityType[i].innerText.indexOf(quality) <= -1) {
-      qualityType[i].parentElement.parentElement.parentElement.style.display = 'none';
+  qualityType.forEach(domQuality => {
+    if (domQuality.innerText.indexOf(quality) != -1) { 
+      domQuality.parentElement.parentElement.parentElement.style.display = 'block';
+    } else if (domQuality.innerText.indexOf(quality) === -1) {
+      domQuality.parentElement.parentElement.parentElement.style.display = 'none';
     }
-  }
+  })
   disableShowButtons();
 };
 
@@ -183,6 +167,18 @@ function findIndexNumber(objId) {
       return i
     }
   }
+};
+
+function liveSearch() {
+  var searchinput = this.value;
+  var searchTextDiv = document.querySelectorAll('.js-search');
+  searchTextDiv.forEach(input => {
+    if (input.innerText.indexOf(searchinput) != -1) { 
+      input.parentElement.style.display = 'block';
+    } else if (input.innerText.indexOf(searchinput) <= -1) {
+      input.parentElement.style.display = 'none';
+    }
+  })   
 };
 
 function resetFilters() {
