@@ -139,6 +139,13 @@ function disableButton(button) {
   button.disabled = true;
 };
 
+function disableShowButtons() {
+  var buttons = document.querySelectorAll('.show-buttons');
+  buttons.forEach(button => {
+    disableButton(button);
+  });
+};
+
 function editText() {
   event.target.contentEditable = true;
 };
@@ -215,13 +222,6 @@ function setShowButtons() {
   } else {
     disableShowButtons();
   }
-};
-
-function disableShowButtons() {
-  var buttons = document.querySelectorAll('.show-buttons');
-  buttons.forEach(button => {
-    disableButton(button);
-  });
 };
 
 function setUneditable() {
