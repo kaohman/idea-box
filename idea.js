@@ -3,7 +3,7 @@ class Idea {
     this.id = id || "id" + Date.now();
     this.title = title;
     this.body = body;
-    this.quality = quality || 'Swill';
+    this.quality = quality || 0;
   }
 
   saveToStorage() {
@@ -23,26 +23,11 @@ class Idea {
     }
   }
 
-  updateQuality(vote) {
-    var qualityArray = ['Swill', 'Plausible', 'Genius', 'Unicorn', 'Magic'];
-    var i = qualityArray.indexOf(this.quality);
-
-    if(vote === 'up') {
-      if (i < qualityArray.length-1) {
-        i++;
-        this.quality = qualityArray[i];
-      }
-    } else if(vote === 'down'){
-      if (i > 0){
-        i--;
-        this.quality = qualityArray[i];
-      }
+  updateQuality(vote, arrayLength) {
+    if((vote === 'up') && (this.quality < arrayLength-1)) {
+      this.quality++;
+    } else if((vote === 'down') && (this.quality > 0)) {
+      this.quality--;
     }
-
   }
-
 }
-
-
-
-// npm test idea-test.js
