@@ -1,11 +1,11 @@
 var cardSection = document.querySelector('.js-card-section');
 var ideaInputs = document.querySelectorAll('.js-idea-inputs');
 var numCounter = 10;
+var qualityArray = ['Swill', 'Plausible', 'Genius', 'Unicorn', 'Magic'];
 var saveButton = document.querySelector('.js-save-button');
 var ideaArray = [];
 
 window.addEventListener('load', createCardsOnReload);
-
 saveButton.addEventListener('click', createNewIdea);
 
 cardSection.addEventListener('dblclick', updateCard);
@@ -28,19 +28,18 @@ ideaInputs.forEach((idea, i) => {
     };
   });
 
-  idea.addEventListener('keyup', event => {
+  idea.addEventListener('keyup', function() {
     countCharacters(this, i);
   });
 });
 
 document.querySelector('.filter-by-quality').addEventListener('click', event => {
   if (event.target.classList.contains('js-filter-by-quality-buttons')) {
-    filterByQuality(event.target.innerText)
+    filterByQuality(event.target.innerText);
   };
 });
 
 document.querySelector(".js-reset").addEventListener('click', resetFilters);
-
 document.querySelector(".search-input").addEventListener("keyup", liveSearch);
 
 document.querySelector('.js-show-more-button').addEventListener('click', calculateNumberShownUp);
@@ -98,7 +97,7 @@ function createCard(idea) {
     <div class='idea-box-bottom'>
       <img class='arrows js-down-vote' src='icons/downvote.svg'>
       <img class='arrows js-up-vote' src='icons/upvote.svg'>
-      <p class='quality'>Quality: <span class='js-quality'>${idea.quality}</span></p>
+      <p class='quality'>Quality: <span class='js-quality'>${qualityArray[idea.quality]}</span></p>
       <img class='delete js-delete-button' src='icons/delete.svg'>
     </div>
   </div>`;
@@ -135,7 +134,6 @@ function deleteCard(event) {
   event.target.closest('.js-idea-card').remove();
   setShowButtons(); 
 };
-
 
 function disableButton(button) {
   button.disabled = true;
@@ -263,28 +261,13 @@ function updateShownArray() {
 function vote(event, votebutton) {
   var index = findIndexNumber(event.target.parentElement.parentElement.dataset.id);
   if (votebutton === 'up') {
-    ideaArray[index].updateQuality('up');
-    event.target.nextElementSibling.firstElementChild.innerText = ideaArray[index].quality;
+    ideaArray[index].updateQuality('up', qualityArray.length);
+    event.target.nextElementSibling.firstElementChild.innerText = qualityArray[ideaArray[index].quality];
   } else if (votebutton === 'down') {
-    ideaArray[index].updateQuality('down');
-    event.target.nextElementSibling.nextElementSibling.firstElementChild.innerText = ideaArray[index].quality;
+    ideaArray[index].updateQuality('down', qualityArray.length);
+    event.target.nextElementSibling.nextElementSibling.firstElementChild.innerText = qualityArray[ideaArray[index].quality];
   }
 
   ideaArray[index].saveToStorage();
   ideaArray.splice(index, 1, ideaArray[index]);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
