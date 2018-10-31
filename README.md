@@ -23,7 +23,7 @@ In week 2, we finished developing the functionality for Idea Box. We added the f
 * Disable submit button based on character count, and
 * Update ideas for 5 qualities.
 
-We also spent time refactoring our code to follow Turing guidelines, follow DRY principles, use logical operators instead of nested if/else statements, and use arrow functions and array prototypes instead of for loops.
+We also spent time refactoring our code to follow Turing guidelines, follow DRY principles, use logical operators instead of nested if/else statements, and use arrow functions and array prototypes instead of for loops as much as possible.
 
 ## Built With
 * HTML
