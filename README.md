@@ -36,4 +36,4 @@ We also spent time refactoring our code to follow Turing guidelines, follow DRY 
 * Dylan Hofmann
 
 ## Final Site Comp
-
+[site layout](site-layout.png)
